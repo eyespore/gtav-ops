@@ -1,4 +1,4 @@
-package club.pineclone.gtavops.macro.action;
+package club.pineclone.gtavops.macro.robot;
 
 
 import io.vproxy.vfx.entity.input.Key;

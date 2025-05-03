@@ -3,16 +3,22 @@ package club.pineclone.gtavops.gui.component;
 import club.pineclone.gtavops.gui.forked.ForkedSlider;
 import io.vproxy.vfx.ui.button.FusionButton;
 import io.vproxy.vfx.ui.layout.HPadding;
+import io.vproxy.vfx.ui.layout.VPadding;
 import io.vproxy.vfx.ui.stage.VStage;
 import io.vproxy.vfx.ui.stage.VStageInitParams;
 import io.vproxy.vfx.ui.toggle.ToggleSwitch;
 import io.vproxy.vfx.ui.wrapper.ThemeLabel;
+import io.vproxy.vfx.util.FXUtils;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SettingStage {
 
@@ -42,12 +48,14 @@ public abstract class SettingStage {
     }
 
     public void show() {
+        FXUtils.observeWidth(getStage().getInitialScene().getNode(), getContent(), -30);
         HBox hbox = new HBox(new HPadding(10), content);
         vStage.getInitialScene().getScrollPane().setContent(hbox);
         vStage.show();
     }
 
     public void showAndWait() {
+        FXUtils.observeWidth(getStage().getInitialScene().getNode(), getContent(), -30);
         HBox hbox = new HBox(new HPadding(10), content);
         vStage.getInitialScene().getScrollPane().setContent(hbox);
         vStage.showAndWait();
@@ -62,7 +70,8 @@ public abstract class SettingStage {
     public void stop() {}
 
     protected HBox creatToggle(String intro, ToggleSwitch toggle) {
-        HBox hBox = getBaseConfigContent(new Insets(12, 7, 0, 20));
+        HBox hBox = getBaseConfigContent(new Insets(22, 7, 0, 20));
+        hBox.setPrefHeight(60);
         Region spacer = getSpacer();
 
         ThemeLabel label = new ThemeLabel(intro);
@@ -85,6 +94,7 @@ public abstract class SettingStage {
 
     protected HBox createSlider(String intro, ForkedSlider slider) {
         HBox hBox = getBaseConfigContent(new Insets(24, 7, 0, 20));
+        hBox.setPrefHeight(70);
         Region spacer = getSpacer();
 
         ThemeLabel label = new ThemeLabel(intro);
@@ -104,5 +114,33 @@ public abstract class SettingStage {
         hBox.setPadding(insets);
         hBox.setPrefWidth(750);
         return hBox;
+    }
+
+    protected ContentBuilder contentBuilder() {
+        return new ContentBuilder();
+    }
+
+    protected class ContentBuilder {
+        private final List<Node> items = new ArrayList<>();
+
+        public ContentBuilder toggle(String intro, ToggleSwitch toggle) {
+            items.add(creatToggle(intro, toggle));
+            return this;
+        }
+
+        public ContentBuilder button(String intro, FusionButton button) {
+            items.add(createButton(intro, button));
+            return this;
+        }
+
+        public ContentBuilder slider(String intro, ForkedSlider slider) {
+            items.add(createSlider(intro, slider));
+            return this;
+        }
+
+        public List<Node> build() {
+            items.add(new VPadding(20));
+            return items;
+        }
     }
 }

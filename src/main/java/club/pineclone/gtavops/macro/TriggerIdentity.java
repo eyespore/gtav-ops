@@ -11,7 +11,7 @@ public class TriggerIdentity {
     private final TriggerMode mode;
     private final Key key;
 
-    public TriggerIdentity(TriggerType type, TriggerMode mode, Key key) {
+    private TriggerIdentity(TriggerType type, TriggerMode mode, Key key) {
         if (!checkCompatibility(type, mode, key)) {
             throw new IllegalArgumentException();
         }

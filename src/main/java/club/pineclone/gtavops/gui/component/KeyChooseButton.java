@@ -24,12 +24,16 @@ public class KeyChooseButton extends FusionButton {
 
     private boolean nullable = false;  /* 默认不支持空值 */
     private final ObjectProperty<Key> keyProperty = new SimpleObjectProperty<>();  /* 当前按键 */
+    private final ForkedKeyChooser keyChooser;
 
     public KeyChooseButton() {
         this(ForkedKeyChooser.FLAG_WITH_KEY);
     }
 
     public KeyChooseButton(int flags) {
+        this.keyChooser = new ForkedKeyChooser(flags);
+        keyChooser.getStage().getStage().initModality(Modality.APPLICATION_MODAL);
+
         StringProperty textProperty = new SimpleStringProperty();
         textProperty.addListener((observable, oldValue, newValue) -> {
             Rectangle2D textBounds = FXUtils.calculateTextBounds(getTextNode());
@@ -46,11 +50,7 @@ public class KeyChooseButton extends FusionButton {
         getTextNode().textProperty().bind(textProperty);
 
         setOnMouseClicked(event -> {
-            // todo: ModdedKeyChooser作为静态final变量
-            ForkedKeyChooser keyChooser = new ForkedKeyChooser(flags);
-            keyChooser.getStage().getStage().initModality(Modality.APPLICATION_MODAL);
             Optional<Key> key = keyChooser.choose();
-
             key.ifPresentOrElse(keyProperty::set, () -> {
                 if (nullable) keyProperty.set(null);
             });

@@ -1,8 +1,8 @@
-package club.pineclone.gtavops.macro.restorestrengthen;
+package club.pineclone.gtavops.macro.quickSnake;
 
-import club.pineclone.gtavops.macro.action.RobotFactory;
+import club.pineclone.gtavops.macro.robot.RobotFactory;
 import club.pineclone.gtavops.macro.action.ScheduledAction;
-import club.pineclone.gtavops.macro.action.VCRobotAdapter;
+import club.pineclone.gtavops.macro.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
 
 public class QuickSnakeAction extends ScheduledAction {
@@ -11,7 +11,7 @@ public class QuickSnakeAction extends ScheduledAction {
     private final VCRobotAdapter robot;
 
     /**
-     * 轮盘吃零食宏
+     * 轮盘吃零食宏，执行时会协助快速按下零食键，从而尽可能提升恢复血量的速度
      * @param interval 吃零食间隔
      * @param snakeKey 吃零食按键
      */

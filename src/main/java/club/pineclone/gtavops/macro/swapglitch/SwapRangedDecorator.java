@@ -1,9 +1,9 @@
 package club.pineclone.gtavops.macro.swapglitch;
 
-import club.pineclone.gtavops.macro.action.RobotFactory;
+import club.pineclone.gtavops.macro.robot.RobotFactory;
 import club.pineclone.gtavops.macro.action.ScheduledAction;
 import club.pineclone.gtavops.macro.action.ScheduledActionDecorator;
-import club.pineclone.gtavops.macro.action.VCRobotAdapter;
+import club.pineclone.gtavops.macro.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
 import javafx.scene.input.MouseButton;
 

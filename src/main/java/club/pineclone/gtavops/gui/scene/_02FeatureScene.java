@@ -1,7 +1,7 @@
 package club.pineclone.gtavops.gui.scene;
 
 import club.pineclone.gtavops.gui.feature.FeatureTogglePane;
-import club.pineclone.gtavops.gui.feature.MarcoRegistry;
+import club.pineclone.gtavops.gui.feature.FeatureRegistry;
 import club.pineclone.gtavops.i18n.I18nHolder;
 import io.vproxy.vfx.ui.scene.VSceneRole;
 import io.vproxy.vfx.ui.wrapper.ThemeLabel;
@@ -26,7 +26,7 @@ public class _02FeatureScene extends SceneTemplate {
         gridPane.setVgap(50);
         FXUtils.observeWidthCenter(getContentPane(), gridPane);
 
-        List<FeatureTogglePane> panes = MarcoRegistry.getInstance().getRegistry();
+        List<FeatureTogglePane> panes = FeatureRegistry.getInstance().getRegistry();
 
         int hLimit = 3;
         int hIndex = 0;

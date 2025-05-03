@@ -1,8 +1,9 @@
-package club.pineclone.gtavops.macro.action;
+package club.pineclone.gtavops.macro.robot;
 
 import io.vproxy.base.util.LogType;
 import io.vproxy.base.util.Logger;
 import io.vproxy.vfx.entity.input.Key;
+import io.vproxy.vfx.entity.input.MouseWheelScroll;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class RobotFactory {
                     case 2 -> new ScrollWheelRobotAdapter(robot);
                     default -> throw new IllegalStateException("Unexpected value: " + identity);
                 };
+//                return new QueuedRobotAdapter(vcRobot);  /* 封装成线程安全的机器人 */
             } catch (AWTException e) {
                 Logger.error(LogType.SYS_ERROR, "cannot successfully create robot instance");
                 throw new RuntimeException(e);
@@ -47,9 +49,12 @@ public class RobotFactory {
 
         @Override
         public void simulate(Key key) throws Exception {
-            this.keyPress(key);
-            Thread.sleep(20);
-            keyRelease(key);
+            try {
+                keyPress(key);
+                Thread.sleep(20);
+            } finally {
+                keyRelease(key);  /* 确保按键被抬起 */
+            }
         }
     }
 
@@ -60,9 +65,12 @@ public class RobotFactory {
 
         @Override
         public void simulate(Key key) throws Exception {
-            mousePress(key);
-            Thread.sleep(20);
-            mouseRelease(key);
+            try {
+                mousePress(key);
+                Thread.sleep(20);
+            } finally {
+                mouseRelease(key);  /* 确保按键被抬起 */
+            }
         }
     }
 

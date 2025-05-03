@@ -1,13 +1,10 @@
-package club.pineclone.gtavops.macro.action;
+package club.pineclone.gtavops.macro.robot;
 
 import club.pineclone.gtavops.utils.KeyUtils;
 import io.vproxy.vfx.entity.input.Key;
 
 import java.awt.*;
 
-/**
- * VC编码集机器人适配器，将VK编码的机器人适配到VC编码
- */
 public class VCRobotAdapter implements RobotAdapter {
 
     protected final Robot robot;

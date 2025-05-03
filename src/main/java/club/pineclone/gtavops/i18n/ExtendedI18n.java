@@ -15,7 +15,8 @@ public class ExtendedI18n implements InternalI18n {
 
 //    public InGame inGame = new InGame();  /* 游戏内名词 */
     public SwapGlitch swapGlitch = new SwapGlitch();  /* 切枪偷速 */
-    public RestoreStrengthen restoreStrengthen = new RestoreStrengthen();  /* 回血增强 */
+    public QuickSnake quickSnake = new QuickSnake();  /* 回血增强 */
+    public ADSwing adSwing = new ADSwing();  /* AD摇 */
 
     /* 主页 */
     public String introSceneTitle = "Introduction";
@@ -47,8 +48,9 @@ public class ExtendedI18n implements InternalI18n {
     public static class SwapGlitch {
         public String title = "swap glitch";
         public String activateKey = "activate key";
-        public String swapMeleeOnActivate = "swap melee on activate";
-        public String swapRangedOnDeactivate = "swap ranged weapon on deactivate";
+        public String enableSwapMelee = "swap melee on activate";
+        public String postSwapMeleeDelay = "delay after swapping melee";
+        public String enableSwapRanged = "swap ranged weapon on deactivate";
         public String activateMethod = "activate method";
         public String swapInterval = "swap interval(ms)";
         public String preferredRangedKey = "preferred ranged weapon key";
@@ -58,12 +60,22 @@ public class ExtendedI18n implements InternalI18n {
     }
 
     @Data
-    public static class RestoreStrengthen {
-        public String title = "restore strengthen";
+    public static class QuickSnake {
+        public String title = "quick snake";
         public String activateKey = "activate key";
         public String triggerInterval = "trigger interval(ms)";
         public String snakeKey = "snake key";
         public String weaponWheelKey = "weapon wheel key";
+    }
+
+    @Data
+    public static class ADSwing {
+        public String title = "AD swing";
+        public String activateKey = "activate key";
+        public String activateMethod = "activate method";
+        public String triggerInterval = "trigger interval(ms)";
+        public String moveLeftKey = "move left key";
+        public String moveRightKey = "move right key";
     }
 
 //    @Data

@@ -108,7 +108,7 @@ public abstract class FeatureTogglePane {
     protected abstract void deactivate();
 
     /**
-     * 功能上下文初始化，{@link MacroManager}会在应用初始化阶段对{@link MarcoRegistry}
+     * 功能上下文初始化，{@link MacroManager}会在应用初始化阶段对{@link FeatureRegistry}
      * 注册表当中注册的所有宏功能类进行遍历，逐个调用此方法，进行初始化和激活
      *
      */

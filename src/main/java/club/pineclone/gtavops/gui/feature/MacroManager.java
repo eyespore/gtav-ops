@@ -10,12 +10,12 @@ public class MacroManager {
 
     public synchronized void enable() {
         GlobalScreenUtils.enable(this);
-        List<FeatureTogglePane> registry = MarcoRegistry.getInstance().getRegistry();
+        List<FeatureTogglePane> registry = FeatureRegistry.getInstance().getRegistry();
         registry.forEach(FeatureTogglePane::init);
     }
 
     public synchronized void disable() {
-        List<FeatureTogglePane> registry = MarcoRegistry.getInstance().getRegistry();
+        List<FeatureTogglePane> registry = FeatureRegistry.getInstance().getRegistry();
         registry.forEach(FeatureTogglePane::stop);
         GlobalScreenUtils.disable(this);
     }

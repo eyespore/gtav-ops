@@ -2,20 +2,24 @@ package club.pineclone.gtavops.macro.trigger;
 
 import club.pineclone.gtavops.macro.TriggerListener;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /* 组合按键触发器 */
 public class KeyChordTrigger extends Trigger implements TriggerListener {
 
     private final List<Trigger> triggers;
     private final Set<Trigger> activeSet = new HashSet<>();
+//    private final Map<Trigger, Long> lastActiveTime = new HashMap<>();
+
     private boolean isActive = false;
+    private static final long TOLERANCE_MS = 100;
 
     public KeyChordTrigger(final List<Trigger> triggers) {
         this.triggers = triggers;
-        triggers.forEach(t -> t.addListener(this));
+        triggers.forEach(t -> {
+            t.addListener(this);
+//            lastActiveTime.put(t, 0L);
+        });
     }
 
     @Override
@@ -30,9 +34,10 @@ public class KeyChordTrigger extends Trigger implements TriggerListener {
 
     @Override
     public void onTriggerActivate(TriggerEvent event) {
+        Trigger source = event.getSource();
         synchronized (activeSet) {
-            System.out.println("activate" + event);
-            activeSet.add(event.getSource());
+            activeSet.add(source);
+//            lastActiveTime.put(source, System.currentTimeMillis());
             if (activeSet.size() == triggers.size() && !isActive) {
                 isActive = true;
                 fireActivate();
@@ -42,9 +47,12 @@ public class KeyChordTrigger extends Trigger implements TriggerListener {
 
     @Override
     public void onTriggerDeactivate(TriggerEvent event) {
+        Trigger source = event.getSource();
         synchronized (activeSet) {
-            System.out.println("deactivate" + event);
-            activeSet.remove(event.getSource());
+//            long now = System.currentTimeMillis();
+//            long lastActive = lastActiveTime.getOrDefault(source, 0L);
+//            if (now - lastActive < TOLERANCE_MS) return;
+            activeSet.remove(source);
             if (isActive && activeSet.size() < triggers.size()) {
                 isActive = false;
                 fireDeactivate();

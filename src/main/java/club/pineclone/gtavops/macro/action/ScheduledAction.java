@@ -26,7 +26,7 @@ public abstract class ScheduledAction extends Action implements ScheduleLifecycl
                             try {
                                 schedule();
                             } catch (Exception e) {
-                                Logger.error(LogType.SYS_ERROR, "exception occur during scheduling");
+                                Logger.error(LogType.ALERT, e.getMessage());
                                 Thread.currentThread().interrupt();  // 处理异常
                             }
                         }, 0, interval, TimeUnit.MILLISECONDS);

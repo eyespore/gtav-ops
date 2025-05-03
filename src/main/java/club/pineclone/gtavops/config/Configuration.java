@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString
 @NoArgsConstructor
 public class Configuration {
 //    public InGame inGame = new InGame();
     public SwapGlitch swapGlitch = new SwapGlitch();
-    public RestoreStrengthen restoreStrengthen = new RestoreStrengthen();
+    public QuickSnake quickSnake = new QuickSnake();
+    public ADSwing adSwing = new ADSwing();
 
     /* 游戏热键 */
 //    @Data
@@ -24,28 +24,40 @@ public class Configuration {
 
     /* 切枪偷速 */
     @Data
-    @ToString
     public static class SwapGlitch {
         public boolean enable = false;  /* 是否启用 */
         public double swapInterval = 50.0;  /* 切枪间隔 */
         public Key activatekey = new Key(MouseButton.BACK);  /* 激活热键 */
         public int activateMethod = 0;  /* 激活方式 0: 按住激活; 1: 切换激活 */
-        public boolean swapMelee = false;  /* 进入偷速切换近战 */
-        public boolean swapRanged = false;  /* 解除偷速切换远程 */
+        public boolean enableSwapMelee = false;  /* 进入偷速切换近战 */
+        public double postSwapMeleeDelay = 120.0;  /* 切换近战武器后等待时间 */
+        public boolean enableSwapRanged = false;  /* 解除偷速切换远程 */
 
-        public Key weaponWheel = new Key(new MouseWheelScroll(MouseWheelScroll.Direction.DOWN));  /* 武器轮盘 */
-        public Key meleeWeapon = new Key(KeyCode.Q);  /* 近战武器 */
-        public Key rangedWeapon = new Key(KeyCode.KEY_1);  /* 远程武器 */
+        public Key weaponWheelKey = new Key(new MouseWheelScroll(MouseWheelScroll.Direction.DOWN));  /* 武器轮盘 */
+        public Key meleeWeaponKey = new Key(KeyCode.Q);  /* 近战武器 */
+        public Key rangedWeaponKey = new Key(KeyCode.KEY_1);  /* 远程武器 */
     }
 
     /* 回血增强 */
     @Data
-    @ToString
-    public static class RestoreStrengthen {
+    public static class QuickSnake {
         public boolean enable = false;
         public double triggerInterval = 20.0;  /* 点按间隔 */
         public Key activatekey = new Key(MouseButton.MIDDLE);  /* 激活热键 */
         public Key snakeKey = new Key(KeyCode.C);  /* 零食键 */
         public Key weaponWheel = new Key(KeyCode.TAB);  /* 武器轮盘 */
     }
+
+
+    @Data
+    public static class ADSwing {
+        public boolean enable = false;
+        public int activateMethod = 0;  /* 激活方式 0: 按住激活; 1: 切换激活 */
+        public double triggerInterval = 20.0;  /* AD点按间隔 */
+        public Key activatekey = new Key(MouseButton.MIDDLE);
+        public Key moveLeftKey = new Key(KeyCode.A);
+        public Key moveRightKey = new Key(KeyCode.D);
+    }
+
 }
+
