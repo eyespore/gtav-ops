@@ -31,6 +31,10 @@ public class PathUtils {
         return appHomePath().resolve(CONFIG_FILE_NAME);
     }
 
+    public static Path getFontpacksBaseDirPath() {
+        return appHomePath().resolve("fontpacks");
+    }
+
     /* 本地化文件目录 */
     public static Path getI18NFilePath(String locale) throws IOException {
         URL resource = PathUtils.class.getResource("/i18n/" + locale + ".json");

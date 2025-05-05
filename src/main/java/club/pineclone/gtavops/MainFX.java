@@ -48,14 +48,17 @@ public class MainFX extends Application {
     private final List<SceneTemplate> mainScenes = new ArrayList<>();
     private VSceneGroup sceneGroup;
     private Exception configLoadException = null;  /* 配置加载异常 */
+    private FusionPane navigatePane;
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException {
+        ExtendedI18n i18n = I18nHolder.get();
+        ExtendedI18n.Intro iI18n = i18n.intro;
+
         if (configLoadException != null) {
             var dialog = new ForkedDialog<Integer>(new VStage(
                     new VStageInitParams().setIconifyButton(false).setMaximizeAndResetButton(false)
             ));
-            ExtendedI18n i18n = I18nHolder.get();
 
             dialog.setText(MessageFormat.format(i18n.configFileLoadFailed, configLoadException.getMessage()));
             dialog.setButtons(Arrays.asList(
@@ -63,7 +66,7 @@ public class MainFX extends Application {
                     new ForkedDialogButton<>(i18n.cancel, 0)
             ));
 
-            dialog.getvStage().getStage().initModality(Modality.APPLICATION_MODAL);
+            dialog.getVStage().getStage().initModality(Modality.APPLICATION_MODAL);
             Optional<Integer> result = dialog.showAndWait();
 
             if (result.isPresent() && result.get() == 1) {
@@ -109,67 +112,36 @@ public class MainFX extends Application {
             sceneGroup.addScene(s);
         }
 
-        var navigatePane = new FusionPane();
-
+        navigatePane = new FusionPane();
         navigatePane.getNode().setPrefHeight(60);
         FXUtils.observeHeight(vStage.getInitialScene().getContentPane(), sceneGroup.getNode(), -10 - 60 - 5 - 10);
-
         FXUtils.observeWidth(vStage.getInitialScene().getContentPane(), sceneGroup.getNode(), -20);
         FXUtils.observeWidth(vStage.getInitialScene().getContentPane(), navigatePane.getNode(), -20);
 
-        var prevButton = new FusionButton("<< Previous") {{
-            setPrefWidth(150);
-            setPrefHeight(navigatePane.getNode().getPrefHeight() - FusionPane.PADDING_V * 2);
-            setOnlyAnimateWhenNotClicked(true);
-
-            var current = sceneGroup.getCurrentMainScene();
-            //noinspection SuspiciousMethodCalls
-            var index = mainScenes.indexOf(current);
-            if (index == 0) {
-                setDisable(true);
-            }
+        List<FusionButton> navigatorButtons = new ArrayList<>() {{
+            add(createNavigateButton(iI18n.introNavigate, 0));
+            add(createNavigateButton(iI18n.featureNavigate, 1));
+            add(createNavigateButton(iI18n.fontpackNavigate, 2));
         }};
-        var nextButton = new FusionButton("Next >>") {{
-            setPrefWidth(150);
-            setPrefHeight(navigatePane.getNode().getPrefHeight() - FusionPane.PADDING_V * 2);
-            setOnlyAnimateWhenNotClicked(true);
 
-            var current = sceneGroup.getCurrentMainScene();
-            //noinspection SuspiciousMethodCalls
-            var index = mainScenes.indexOf(current);
-            if (index == mainScenes.size() - 1) {
-                setDisable(true);
-            }
-        }};
-        prevButton.setOnAction(e -> {
-            var current = sceneGroup.getCurrentMainScene();
-            //noinspection SuspiciousMethodCalls
-            var index = mainScenes.indexOf(current);
-            if (index == 0) return;
-            sceneGroup.show(mainScenes.get(index - 1), VSceneShowMethod.FROM_LEFT);
-            if (index - 1 == 0) {
-                prevButton.setDisable(true);
-            }
-            nextButton.setDisable(false);
-        });
-        nextButton.setOnAction(e -> {
-            var current = sceneGroup.getCurrentMainScene();
-            //noinspection SuspiciousMethodCalls
-            var index = mainScenes.indexOf(current);
-            if (index == mainScenes.size() - 1) return;
-            sceneGroup.show(mainScenes.get(index + 1), VSceneShowMethod.FROM_RIGHT);
-            if (index + 1 == mainScenes.size() - 1) {
-                nextButton.setDisable(true);
-            }
-            prevButton.setDisable(false);
-        });
-
-        navigatePane.getContentPane().getChildren().add(prevButton);
-        navigatePane.getContentPane().getChildren().add(nextButton);
+        navigatePane.getContentPane().getChildren().addAll(navigatorButtons);
         navigatePane.getContentPane().widthProperty().addListener((ob, old, now) -> {
             if (now == null) return;
-            var v = now.doubleValue();
-            nextButton.setLayoutX(v - nextButton.getPrefWidth());
+            double totalWidth = 0;
+            double spacing = FusionPane.PADDING_H;
+
+            // 计算总宽度：按钮总宽度 + 间隔总宽度
+            for (FusionButton btn : navigatorButtons) {
+                totalWidth += btn.getPrefWidth();
+            }
+            totalWidth += spacing * (navigatorButtons.size() - 1);
+
+            double x = now.doubleValue() / 2 - totalWidth / 2;
+
+            for (FusionButton btn : navigatorButtons) {
+                btn.setLayoutX(x);
+                x += btn.getPrefWidth() + spacing;
+            }
         });
 
         var box = new HBox(
@@ -199,19 +171,19 @@ public class MainFX extends Application {
         menuScene.getContentPane().getChildren().add(menuVBox);
         for (int i = 0; i < mainScenes.size(); ++i) {
             final var fi = i;
-            var s = mainScenes.get(i);
-            var title = s.getTitle();
+            var scene = mainScenes.get(i);
+            var title = scene.getTitle();
             var button = new FusionButton(title);
             button.setDisableAnimation(true);
             button.setOnAction(e -> {
                 //noinspection SuspiciousMethodCalls
                 var currentIndex = mainScenes.indexOf(sceneGroup.getCurrentMainScene());
                 if (currentIndex != fi) {
-                    sceneGroup.show(s, currentIndex < fi ? VSceneShowMethod.FROM_RIGHT : VSceneShowMethod.FROM_LEFT);
+                    sceneGroup.show(scene, currentIndex < fi ? VSceneShowMethod.FROM_RIGHT : VSceneShowMethod.FROM_LEFT);
                 }
                 vStage.getRootSceneGroup().hide(menuScene, VSceneHideMethod.TO_LEFT);
-                prevButton.setDisable(fi == 0);
-                nextButton.setDisable(fi == mainScenes.size() - 1);
+//                prevButton.setDisable(fi == 0);
+//                nextButton.setDisable(fi == mainScenes.size() - 1);
             });
             button.setPrefWidth(400);
             button.setPrefHeight(40);
@@ -238,6 +210,28 @@ public class MainFX extends Application {
         vStage.getStage().centerOnScreen();
         vStage.getStage().show();
     }
+
+    private FusionButton createNavigateButton(String text, int index) {
+        return new FusionButton(text) {{
+            setPrefWidth(150);
+            setPrefHeight(navigatePane.getNode().getPrefHeight() - FusionPane.PADDING_V * 2);  /* 40 */
+            setOnAction(e -> {
+                var current = sceneGroup.getCurrentMainScene();
+                //noinspection SuspiciousMethodCalls
+                int currentIndex = mainScenes.indexOf(current);
+                if (currentIndex == index) return;
+
+                setDisable(true);
+                if (index > currentIndex) {
+                    sceneGroup.show(mainScenes.get(index), VSceneShowMethod.FROM_RIGHT);
+                } else {
+                    sceneGroup.show(mainScenes.get(index), VSceneShowMethod.FROM_LEFT);
+                }
+                setDisable(false);
+            });
+        }};
+    }
+
 
     @Override
     public void init() throws Exception {

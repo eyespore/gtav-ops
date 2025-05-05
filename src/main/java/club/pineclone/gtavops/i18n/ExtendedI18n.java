@@ -12,6 +12,10 @@ public class ExtendedI18n implements InternalI18n {
     public String unset = "<unset>";
     public String confirm = "Confirm";
     public String cancel = "Cancel";
+    public String unknown = "Unknown";
+    public String enabled = "Enabled";
+    public String disabled = "Disabled";
+
 
 //    public InGame inGame = new InGame();  /* 游戏内名词 */
     public SwapGlitch swapGlitch = new SwapGlitch();  /* 切枪偷速 */
@@ -42,6 +46,10 @@ public class ExtendedI18n implements InternalI18n {
         public String header = "Coded By Pineclone";
         public String versionLabel = "version: ";
         public String acknowledgement = "UI design powered by wkgcass";
+
+        public String introNavigate = "Intro";
+        public String featureNavigate = "Feature";
+        public String fontpackNavigate = "Fontpack";
     }
 
     /* 功能选项 */
@@ -54,8 +62,41 @@ public class ExtendedI18n implements InternalI18n {
     /* 字体包管理 */
     @Data
     public static class FontPack {
-        public String header = "Font Pack Management";
         public String title = "Font Pack Manager";
+        public String gamePath = "Legacy Version";
+
+        public String name = "name";
+        public String desc = "description";
+        public String type = "type";
+        public String size = "size";
+        public String createAt = "create At";
+        public String status = "status";
+
+        public String legacy = "Legacy";
+        public String enhanced = "Enhanced";
+
+        public String importFontpack = "Import";
+        public String removeFontpack = "Remove";
+        public String activateFontpack = "Activate";
+        public String alreadyActivated = "Activated";
+        public String chooseFontpackFile = "Choose Fontpack File";
+        public String chooseGameHome = "Choose Game Home";
+        public String fontpackFileDesc = "Fontpack file";
+
+        public String fontpackName = "Fontpack name";
+        public String defaultNaming = "My Fontpack";
+
+        public String importingFontpack = "Importing Fontpack";
+        public String importingFontpackDesc = "We could go faster, but then you wouldn't get to read this.";
+        public String importSuccess = "import Fontpack Success";
+        public String importFailure = "import Fontpack Failure";
+
+        public String fontpackIsEnabled = "This fontpack is still enabled, you have to disable it first!";
+        public String illegalGameHome = "Illegal game home was selected! Make sure you choose the right game home directory";
+        public String fontpackExisted = "Detected existed fontpack resources at [{0}], would you like to import it into gtav-ops?";
+        public String emptyGameHome = "/path/to/your/Grand Theft Auto V";
+        public String confirmActivateFontpack = "Do you want to activate fontpack [{0}]?";
+        public String confirmRemoveFontpack = "Are you sure you want to remove fontpack [{0}]?";
     }
 
     /* 切枪偷速 */
@@ -80,7 +121,7 @@ public class ExtendedI18n implements InternalI18n {
     /* 近战武器偷速 */
     @Data
     public static class MeleeGlitch {
-        public String title = "Melee Glitch";
+        public String title = "melee glitch";
         public String activateKey = "activate key";
         public String activateMethod = "activate method";  /* 激活方式 */
         public String meleeSnakeScrollKey = "melee snake scroll key";  /* 近战零食滚轮键 */

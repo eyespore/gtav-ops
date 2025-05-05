@@ -3,9 +3,13 @@ package club.pineclone.gtavops.gui.theme;
 import io.vproxy.vfx.manager.font.FontProvider;
 import io.vproxy.vfx.manager.font.FontSettings;
 import io.vproxy.vfx.manager.font.FontUsage;
+import io.vproxy.vfx.manager.font.FontUsages;
 import io.vproxy.vfx.theme.impl.DarkTheme;
 import io.vproxy.vfx.theme.impl.DarkThemeFontProvider;
 import javafx.scene.text.Font;
+
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class PinecloneTheme extends DarkTheme {
 
@@ -25,14 +29,60 @@ public class PinecloneTheme extends DarkTheme {
 
         @Override
         protected void windowTitle(FontSettings settings) {
-            this.defaultFont(settings);
+            defaultFont(settings);
             settings.setSize(24.0);
         }
 
         @Override
         protected void _default(FontUsage usage, FontSettings settings) {
-            this.defaultFont(settings);
+            defaultFont(settings);
             settings.setSize(25.0);
         }
+
+        @Override
+        protected void tableCellText(FontSettings settings) {
+            defaultFont(settings);
+            settings.setSize(25.0);
+        }
+
+        /* 列表为空时的填充 */
+        protected void tableEmptyTableLabel(FontSettings settings) {
+            defaultFont(settings);
+            settings.setSize(30.0);
+        }
+
+        /* 表头 */
+        private void tableHeadText(FontSettings settings) {
+            defaultFont(settings);
+            settings.setSize(25.0);
+        }
+
+        private void textField(FontSettings settings) {
+            defaultFont(settings);
+            settings.setSize(25.0);
+        }
+
+        @Override
+        public void apply(FontUsage usage, FontSettings settings) {
+            fontPack.getOrDefault(usage, s -> this._default(usage, s)).accept(settings);
+
+            if (usage == FontUsages.windowTitle) {
+                windowTitle(settings);
+            } else if (usage == FontUsages.tableCellText) {
+                tableCellText(settings);
+            } else if (usage == FontUsages.tableEmptyTableLabel) {
+                tableEmptyTableLabel(settings);
+            } else {
+                _default(usage, settings);
+            }
+        }
+
+        private final Map<FontUsage, Consumer<FontSettings>> fontPack = Map.of(
+                FontUsages.windowTitle, this::windowTitle,
+                FontUsages.tableCellText, this::tableCellText,
+                FontUsages.tableEmptyTableLabel, this::tableEmptyTableLabel,
+                ExtendedFontUsages.tableHeadText, this::tableHeadText,
+                ExtendedFontUsages.textField, this::textField
+        );
     }
 }

@@ -2,8 +2,8 @@ package club.pineclone.gtavops.gui.feature;
 
 import club.pineclone.gtavops.config.ConfigHolder;
 import club.pineclone.gtavops.config.Configuration;
-import club.pineclone.gtavops.gui.component.KeyChooseButton;
-import club.pineclone.gtavops.gui.component.SettingStage;
+import club.pineclone.gtavops.gui.component.VKeyChooseButton;
+import club.pineclone.gtavops.gui.component.VSettingStage;
 import club.pineclone.gtavops.gui.forked.ForkedKeyChooser;
 import club.pineclone.gtavops.gui.forked.ForkedSlider;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
@@ -71,21 +71,21 @@ public class _02QuickSnakeFeatureTogglePane extends FeatureTogglePane {
     }
 
     @Override
-    public SettingStage getSettingStage() {
+    public VSettingStage getSettingStage() {
         return new RSSettingStage();
     }
 
-    private class RSSettingStage extends SettingStage {
+    private class RSSettingStage extends VSettingStage {
 
         private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
         private static final int FLAG_WITH_ALL = FLAG_WITH_KEY_AND_MOUSE | ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL;
 
-        private final KeyChooseButton snakeKeyBtn = new KeyChooseButton();
-        private final KeyChooseButton activateKeyBtn = new KeyChooseButton(FLAG_WITH_KEY_AND_MOUSE);
-        private final KeyChooseButton weaponWheelKeyBtn = new KeyChooseButton(FLAG_WITH_ALL);
+        private final VKeyChooseButton snakeKeyBtn = new VKeyChooseButton();
+        private final VKeyChooseButton activateKeyBtn = new VKeyChooseButton(FLAG_WITH_KEY_AND_MOUSE);
+        private final VKeyChooseButton weaponWheelKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
         private final ForkedSlider triggerIntervalSlider = new ForkedSlider() {{
-            setLength(400);
-            setRange(10, 200);
+            setLength(200);
+            setRange(1, 100);
         }};
 
         public RSSettingStage() {

@@ -1,6 +1,6 @@
 package club.pineclone.gtavops.gui.feature;
 
-import club.pineclone.gtavops.gui.component.SettingStage;
+import club.pineclone.gtavops.gui.component.VSettingStage;
 import io.vproxy.vfx.ui.pane.FusionPane;
 import io.vproxy.vfx.ui.toggle.ToggleSwitch;
 import io.vproxy.vfx.ui.wrapper.ThemeLabel;
@@ -73,7 +73,7 @@ public abstract class FeatureTogglePane {
                 toggle.setSelected(!flag);
 
             } else if (e.getButton() == MouseButton.SECONDARY) {
-                SettingStage settingStage = FeatureTogglePane.this.getSettingStage();
+                VSettingStage settingStage = FeatureTogglePane.this.getSettingStage();
                 if (settingStage == null) return;
 
                 FeaturePaneInitializer.getInstance().disable();  // 禁用宏，启用设置
@@ -120,7 +120,7 @@ public abstract class FeatureTogglePane {
      */
     public abstract void stop();
 
-    public SettingStage getSettingStage() {
+    public VSettingStage getSettingStage() {
         return null;
     }
 }

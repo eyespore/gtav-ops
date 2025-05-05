@@ -20,12 +20,12 @@ import javafx.stage.Modality;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SettingStage {
+public abstract class VSettingStage {
 
     private final VStage vStage;
     private final VBox content;
 
-    public SettingStage() {
+    public VSettingStage() {
         vStage = new VStage(new VStageInitParams()
                 .setMaximizeAndResetButton(false)
                 .setIconifyButton(false)

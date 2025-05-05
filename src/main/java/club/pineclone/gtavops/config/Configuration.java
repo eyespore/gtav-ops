@@ -22,6 +22,8 @@ public class Configuration {
 //    public static class InGame {
 //    }
 
+    public String gameHome = "";  /* 游戏路径 */
+
     /* 切枪偷速 */
     @Data
     public static class SwapGlitch {

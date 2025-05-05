@@ -2,10 +2,10 @@ package club.pineclone.gtavops.gui.feature;
 
 import club.pineclone.gtavops.config.ConfigHolder;
 import club.pineclone.gtavops.config.Configuration;
-import club.pineclone.gtavops.gui.component.OptionalButton;
+import club.pineclone.gtavops.gui.component.VOptionalButton;
 import club.pineclone.gtavops.gui.forked.ForkedKeyChooser;
-import club.pineclone.gtavops.gui.component.KeyChooseButton;
-import club.pineclone.gtavops.gui.component.SettingStage;
+import club.pineclone.gtavops.gui.component.VKeyChooseButton;
+import club.pineclone.gtavops.gui.component.VSettingStage;
 import club.pineclone.gtavops.gui.forked.ForkedSlider;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
@@ -109,28 +109,28 @@ public class _01SwapGlitchFeatureTogglePane extends FeatureTogglePane {
     }
 
     @Override
-    public SettingStage getSettingStage() {
+    public VSettingStage getSettingStage() {
         return new SGSettingStage();
     }
 
-    private class SGSettingStage extends SettingStage {
+    private class SGSettingStage extends VSettingStage {
 
         private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
         private static final int FLAG_WITH_ALL = FLAG_WITH_KEY_AND_MOUSE | ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL;
 
-        private final KeyChooseButton activateKeyBtn = new KeyChooseButton(FLAG_WITH_KEY_AND_MOUSE);
-        private final KeyChooseButton weaponWheelKeyBtn = new KeyChooseButton(FLAG_WITH_ALL);
+        private final VKeyChooseButton activateKeyBtn = new VKeyChooseButton(FLAG_WITH_KEY_AND_MOUSE);
+        private final VKeyChooseButton weaponWheelKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
 
-        private final KeyChooseButton meleeKeyBtn = new KeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
-        private final KeyChooseButton preferredRangedKeyBtn = new KeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
+        private final VKeyChooseButton meleeKeyBtn = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
+        private final VKeyChooseButton preferredRangedKeyBtn = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
 
         private final ToggleSwitch enableSwapMeleeToggle = new ToggleSwitch();
         private final ToggleSwitch enableSwapRangedToggle = new ToggleSwitch();  /* 切出偷速时切换远程武器 */
 
         private final ToggleSwitch enableSafetyWeaponWheelToggle = new ToggleSwitch();  /* 启用安全武器轮盘 */
-        private final KeyChooseButton safetyWeaponWheelBtn = new KeyChooseButton();  /* 启用安全武器轮盘 */
+        private final VKeyChooseButton safetyWeaponWheelBtn = new VKeyChooseButton();  /* 启用安全武器轮盘 */
 
-        private final OptionalButton activateMethodBtn = new OptionalButton() {{
+        private final VOptionalButton activateMethodBtn = new VOptionalButton() {{
             addOptionalItem(i18n.hold);
             addOptionalItem(i18n.toggle);
         }};

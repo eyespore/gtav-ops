@@ -2,9 +2,9 @@ package club.pineclone.gtavops.gui.feature;
 
 import club.pineclone.gtavops.config.ConfigHolder;
 import club.pineclone.gtavops.config.Configuration;
-import club.pineclone.gtavops.gui.component.KeyChooseButton;
-import club.pineclone.gtavops.gui.component.OptionalButton;
-import club.pineclone.gtavops.gui.component.SettingStage;
+import club.pineclone.gtavops.gui.component.VKeyChooseButton;
+import club.pineclone.gtavops.gui.component.VOptionalButton;
+import club.pineclone.gtavops.gui.component.VSettingStage;
 import club.pineclone.gtavops.gui.forked.ForkedKeyChooser;
 import club.pineclone.gtavops.gui.forked.ForkedSlider;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
@@ -79,21 +79,21 @@ public class _04MeleeGlitchFeatureTogglePane extends FeatureTogglePane {
     }
 
     @Override
-    public SettingStage getSettingStage() {
+    public VSettingStage getSettingStage() {
         return new MGSettingStage();
     }
 
-    private class MGSettingStage extends SettingStage {
+    private class MGSettingStage extends VSettingStage {
 
         private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
         private static final int FLAG_WITH_ALL = FLAG_WITH_KEY_AND_MOUSE | ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL;
 
-        private final OptionalButton activateMethodBtn = new OptionalButton() {{
+        private final VOptionalButton activateMethodBtn = new VOptionalButton() {{
             addOptionalItem(i18n.hold);
             addOptionalItem(i18n.toggle);
         }};
-        private final KeyChooseButton activateKeyBtn = new KeyChooseButton(FLAG_WITH_ALL);
-        private final KeyChooseButton meleeSnakeScrollKeyBtn = new KeyChooseButton(ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL);
+        private final VKeyChooseButton activateKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
+        private final VKeyChooseButton meleeSnakeScrollKeyBtn = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL);
         private final ForkedSlider triggerIntervalSlider = new ForkedSlider() {{
             setLength(200);
             setRange(10, 50);

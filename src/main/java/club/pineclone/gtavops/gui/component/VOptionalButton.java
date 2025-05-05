@@ -1,8 +1,6 @@
 package club.pineclone.gtavops.gui.component;
 
-import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
-import io.vproxy.commons.util.Singleton;
 import io.vproxy.vfx.ui.button.FusionButton;
 import io.vproxy.vfx.util.FXUtils;
 import javafx.beans.property.*;
@@ -11,13 +9,13 @@ import javafx.geometry.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptionalButton extends FusionButton {
+public class VOptionalButton extends FusionButton {
 
     private final IntegerProperty indexProperty = new SimpleIntegerProperty(-1);
     private final ObjectProperty<OptionItem> itemProperty = new SimpleObjectProperty<>();
     private final List<OptionItem> items = new ArrayList<>();
 
-    public OptionalButton() {
+    public VOptionalButton() {
         StringProperty textProperty = new SimpleStringProperty();
         textProperty.addListener((observable, oldValue, newValue) -> {
             Rectangle2D textBounds = FXUtils.calculateTextBounds(getTextNode());

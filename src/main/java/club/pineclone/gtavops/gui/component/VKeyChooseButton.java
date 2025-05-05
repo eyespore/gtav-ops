@@ -20,17 +20,17 @@ import java.util.Optional;
  * 支持按键选择的按钮，按下按钮之后弹出弹窗等待用户按下按钮，可用于设定快捷键，仅支持单按键，
  * 支持滚轮、双侧键、鼠标按键以及键盘按键
  */
-public class KeyChooseButton extends FusionButton {
+public class VKeyChooseButton extends FusionButton {
 
     private boolean nullable = false;  /* 默认不支持空值 */
     private final ObjectProperty<Key> keyProperty = new SimpleObjectProperty<>();  /* 当前按键 */
     private final ForkedKeyChooser keyChooser;
 
-    public KeyChooseButton() {
+    public VKeyChooseButton() {
         this(ForkedKeyChooser.FLAG_WITH_KEY);
     }
 
-    public KeyChooseButton(int flags) {
+    public VKeyChooseButton(int flags) {
         this.keyChooser = new ForkedKeyChooser(flags);
         keyChooser.getStage().getStage().initModality(Modality.APPLICATION_MODAL);
 

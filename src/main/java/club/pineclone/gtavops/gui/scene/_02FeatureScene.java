@@ -25,10 +25,10 @@ public class _02FeatureScene extends SceneTemplate {
 
         var msgLabel = new ThemeLabel(fI18n.header);
         FXUtils.observeWidthCenter(getContentPane(), msgLabel);
-        msgLabel.setLayoutY(100);
+        msgLabel.setLayoutY(60);
 
         GridPane gridPane = new GridPane();
-        gridPane.setLayoutY(200);
+        gridPane.setLayoutY(140);
         gridPane.setHgap(50);
         gridPane.setVgap(50);
         FXUtils.observeWidthCenter(getContentPane(), gridPane);

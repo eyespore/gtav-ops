@@ -13,9 +13,11 @@ module club.pineclone.gtavops {
 
     opens club.pineclone.gtavops;
     opens club.pineclone.gtavops.utils;
+    opens club.pineclone.gtavops.pojo;
 
     exports club.pineclone.gtavops;
     exports club.pineclone.gtavops.utils;
+    exports club.pineclone.gtavops.pojo;
 
     /* for test */
     exports club.pineclone.gtavops.macro;
