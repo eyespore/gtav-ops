@@ -6,14 +6,20 @@ import io.vproxy.vfx.manager.font.FontUsage;
 import io.vproxy.vfx.manager.font.FontUsages;
 import io.vproxy.vfx.theme.impl.DarkTheme;
 import io.vproxy.vfx.theme.impl.DarkThemeFontProvider;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class PinecloneTheme extends DarkTheme {
+public class GTAVOpsBaseTheme extends DarkTheme {
 
     private static final String FONT_NAME_FZMiaoWUS_GB = "FZMiaoWuS-GB";
+
+    public Color activeTextColor() {
+        return Color.web("lightgreen");
+    }
+
 
     @Override
     public FontProvider fontProvider() {

@@ -1,12 +1,12 @@
 package club.pineclone.gtavops.gui.component;
 
 import club.pineclone.gtavops.gui.theme.ExtendedFontUsages;
+import club.pineclone.gtavops.utils.ColorUtils;
 import io.vproxy.vfx.manager.font.FontManager;
 import io.vproxy.vfx.theme.Theme;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 public class VTextField extends TextField {
 
@@ -24,17 +24,9 @@ public class VTextField extends TextField {
                 new BorderWidths(0.5))));
 
         FontManager.get().setFont(ExtendedFontUsages.textField, this);
-        String textColor = formatAsHex(Theme.current().normalTextColor());
-        String promptColor = formatAsHex(Theme.current().normalTextColor().darker());
+        String textColor = ColorUtils.formatAsHex(Theme.current().normalTextColor());
+        String promptColor = ColorUtils.formatAsHex(Theme.current().normalTextColor().darker());
 
         setStyle("-fx-text-fill: " + textColor + "; -fx-prompt-text-fill: " + promptColor + ";");
-    }
-
-    private String formatAsHex(Color color) {
-       return String.format("#%02X%02X%02X",
-                (int) (color.getRed() * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue() * 255)
-        );
     }
 }

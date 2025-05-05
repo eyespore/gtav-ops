@@ -5,7 +5,6 @@ import io.vproxy.base.util.Logger;
 import javafx.scene.image.Image;
 
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 

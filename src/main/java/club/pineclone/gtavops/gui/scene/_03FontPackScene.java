@@ -4,18 +4,18 @@ import club.pineclone.gtavops.config.ConfigHolder;
 import club.pineclone.gtavops.config.Configuration;
 import club.pineclone.gtavops.gui.component.VTextField;
 import club.pineclone.gtavops.gui.forked.*;
-import club.pineclone.gtavops.gui.theme.ExtendedFontUsages;
+import club.pineclone.gtavops.gui.theme.GTAVOpsBaseTheme;
 import club.pineclone.gtavops.pojo.FontpackMetadata;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
 import club.pineclone.gtavops.service.FontpackService;
+import club.pineclone.gtavops.utils.ColorUtils;
 import club.pineclone.gtavops.utils.PathUtils;
 import io.vproxy.base.util.LogType;
 import io.vproxy.base.util.Logger;
 import io.vproxy.base.util.callback.Callback;
 import io.vproxy.vfx.manager.font.FontManager;
 import io.vproxy.vfx.manager.font.FontUsages;
-import io.vproxy.vfx.theme.Theme;
 import io.vproxy.vfx.ui.alert.StackTraceAlert;
 import io.vproxy.vfx.ui.button.FusionButton;
 import io.vproxy.vfx.ui.layout.HPadding;
@@ -25,7 +25,6 @@ import io.vproxy.vfx.ui.loading.LoadingItem;
 import io.vproxy.vfx.ui.pane.FusionPane;
 import io.vproxy.vfx.ui.scene.VSceneRole;
 import io.vproxy.vfx.ui.table.VTableView;
-import io.vproxy.vfx.ui.wrapper.FusionW;
 import io.vproxy.vfx.ui.wrapper.ThemeLabel;
 import io.vproxy.vfx.util.FXUtils;
 import io.vproxy.vfx.util.MiscUtils;
@@ -40,7 +39,6 @@ import javafx.stage.Modality;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 
 public class _03FontPackScene extends SceneTemplate {
@@ -81,6 +78,7 @@ public class _03FontPackScene extends SceneTemplate {
             setPrefWidth(700);
             setPrefHeight(35);
             setOnAction(e -> selectGameHome());
+            setDisableAnimation(true);
 
             String gameHome = config.gameHome;
             if (gameHome == null || gameHome.isEmpty()) {
@@ -90,10 +88,8 @@ public class _03FontPackScene extends SceneTemplate {
             }
         }};
         pathLabelContent.getChildren().addAll(pathLabel, gameHomeChooseBtn);
-
         pathLabelContent.setAlignment(Pos.CENTER);
         pathLabelContent.setLayoutY(40);
-
         FXUtils.observeWidthCenter(getContentPane(), pathLabelContent);
 
         /* CREATE TABLE */
@@ -103,7 +99,7 @@ public class _03FontPackScene extends SceneTemplate {
 
 //        var idCol = new ForkedTableColumn<FontPackMetadata, Object>("id", data -> data.id);
         var nameCol = new ForkedTableColumn<FontpackMetadata, FontpackMetadata>(fpI18n.name, Function.identity());
-        var enabledCol = new ForkedTableColumn<FontpackMetadata, FontpackMetadata>(fpI18n.name, Function.identity());
+        var enabledCol = new ForkedTableColumn<FontpackMetadata, FontpackMetadata>(fpI18n.status, Function.identity());
         var typeCol = new ForkedTableColumn<>(fpI18n.type, FontpackMetadata::formatType);
         var sizeCol = new ForkedTableColumn<>(fpI18n.size, FontpackMetadata::getSize);
         var createTimeCol = new ForkedTableColumn<>(fpI18n.createAt, FontpackMetadata::formatCreatedAt);
@@ -116,7 +112,8 @@ public class _03FontPackScene extends SceneTemplate {
             var textField = new VTextField();
             var text = new ForkedFusionW(textField) {{
                 FontManager.get().setFont(FontUsages.tableCellText, getLabel());
-                node.setStyle("-fx-background-color: transparent; -fx-text-fill: lightgreen; -fx-padding: 0 0 0 0; -fx-border-color: transparent");
+                String colorStr = ColorUtils.formatAsHex(((GTAVOpsBaseTheme)GTAVOpsBaseTheme.current()).activeTextColor());
+                node.setStyle("-fx-background-color: transparent; -fx-text-fill: " + colorStr + "; -fx-padding: 8 0 8 0; -fx-border-color: transparent");
             }};
 
             textField.setText(data.getName());
@@ -145,12 +142,11 @@ public class _03FontPackScene extends SceneTemplate {
         });
 
         enabledCol.setAlignment(Pos.CENTER);
-        enabledCol.setComparator(Comparator.comparing(FontpackMetadata::getEnabled));
+        enabledCol.setComparator(Comparator.comparing(FontpackMetadata::getEnabled).reversed());
         enabledCol.setNodeBuilder(data -> {
-            var textField = new VTextField();
-            textField.setText(data.formatEnabled());
+            var textField = new ThemeLabel(data.formatEnabled());
             if (data.getEnabled()) {
-                textField.setStyle("-fx-text-fill: #8f82e8; -fx-background-color: transparent;");
+                textField.setStyle("-fx-text-fill: #de23de");
             }
             return textField;
         });

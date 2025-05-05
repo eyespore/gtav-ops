@@ -7,6 +7,7 @@ import club.pineclone.gtavops.gui.forked.ForkedDialog;
 import club.pineclone.gtavops.gui.forked.ForkedDialogButton;
 import club.pineclone.gtavops.gui.scene.SceneRegistry;
 import club.pineclone.gtavops.gui.scene.SceneTemplate;
+import club.pineclone.gtavops.gui.theme.ExtendedFontUsages;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
 import club.pineclone.gtavops.macro.action.ActionTaskManager;
@@ -15,6 +16,7 @@ import club.pineclone.gtavops.utils.JLibLocator;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import io.vproxy.base.util.LogType;
 import io.vproxy.vfx.control.globalscreen.GlobalScreenUtils;
+import io.vproxy.vfx.manager.font.FontManager;
 import io.vproxy.vfx.manager.task.TaskManager;
 import io.vproxy.vfx.theme.Theme;
 import io.vproxy.vfx.ui.button.FusionButton;
@@ -26,12 +28,14 @@ import io.vproxy.vfx.ui.scene.*;
 import io.vproxy.vfx.ui.stage.VStage;
 import io.vproxy.vfx.ui.stage.VStageInitParams;
 import io.vproxy.vfx.util.FXUtils;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -49,11 +53,13 @@ public class MainFX extends Application {
     private VSceneGroup sceneGroup;
     private Exception configLoadException = null;  /* 配置加载异常 */
     private FusionPane navigatePane;
+    private List<FusionButton> navigatorButtons;
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException {
         ExtendedI18n i18n = I18nHolder.get();
         ExtendedI18n.Intro iI18n = i18n.intro;
+
 
         if (configLoadException != null) {
             var dialog = new ForkedDialog<Integer>(new VStage(
@@ -118,12 +124,13 @@ public class MainFX extends Application {
         FXUtils.observeWidth(vStage.getInitialScene().getContentPane(), sceneGroup.getNode(), -20);
         FXUtils.observeWidth(vStage.getInitialScene().getContentPane(), navigatePane.getNode(), -20);
 
-        List<FusionButton> navigatorButtons = new ArrayList<>() {{
+        navigatorButtons = new ArrayList<>() {{
             add(createNavigateButton(iI18n.introNavigate, 0));
             add(createNavigateButton(iI18n.featureNavigate, 1));
             add(createNavigateButton(iI18n.fontpackNavigate, 2));
         }};
 
+        navigatorButtons.get(0).setDisable(true);  /* 默认页禁用 */
         navigatePane.getContentPane().getChildren().addAll(navigatorButtons);
         navigatePane.getContentPane().widthProperty().addListener((ob, old, now) -> {
             if (now == null) return;
@@ -163,6 +170,7 @@ public class MainFX extends Application {
                 CornerRadii.EMPTY,
                 Insets.EMPTY
         )));
+
         vStage.getRootSceneGroup().addScene(menuScene, VSceneHideMethod.TO_LEFT);
         var menuVBox = new VBox() {{
             setPadding(new Insets(0, 0, 0, 24));
@@ -211,23 +219,38 @@ public class MainFX extends Application {
         vStage.getStage().show();
     }
 
+    private boolean isSwitch = false;
+
     private FusionButton createNavigateButton(String text, int index) {
         return new FusionButton(text) {{
             setPrefWidth(150);
             setPrefHeight(navigatePane.getNode().getPrefHeight() - FusionPane.PADDING_V * 2);  /* 40 */
+            setDisableAnimation(true);
+
             setOnAction(e -> {
+                if (isSwitch) return;
                 var current = sceneGroup.getCurrentMainScene();
                 //noinspection SuspiciousMethodCalls
                 int currentIndex = mainScenes.indexOf(current);
                 if (currentIndex == index) return;
 
-                setDisable(true);
-                if (index > currentIndex) {
-                    sceneGroup.show(mainScenes.get(index), VSceneShowMethod.FROM_RIGHT);
-                } else {
-                    sceneGroup.show(mainScenes.get(index), VSceneShowMethod.FROM_LEFT);
-                }
-                setDisable(false);
+                VSceneShowMethod method = index > currentIndex ?
+                        VSceneShowMethod.FROM_RIGHT : VSceneShowMethod.FROM_LEFT;
+
+                isSwitch = true;
+                navigatorButtons.forEach(b -> b.setDisable(true));
+
+                SceneTemplate newScene = mainScenes.get(index);
+                sceneGroup.show(newScene, method);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(500));
+                pause.setOnFinished(e2 -> {
+                    isSwitch = false;
+                    for (int i = 0; i < navigatorButtons.size(); i++) {
+                        navigatorButtons.get(i).setDisable(i == index);
+                    }
+                });
+                pause.play();
             });
         }};
     }

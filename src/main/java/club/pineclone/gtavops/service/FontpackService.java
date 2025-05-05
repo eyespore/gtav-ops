@@ -69,7 +69,8 @@ public class FontpackService {
      * 获取字体包列表
      */
     public List<FontpackMetadata> listFontPacks() {
-        return dao.listAll();
+        return dao.listAll().stream().sorted(Comparator.comparing(FontpackMetadata::getName)).toList();  // reversed 确保 true 排在后面
+
     }
 
     public List<FontpackMetadata> listFontPacksByCondition(FontpackMetadata metadata) {
