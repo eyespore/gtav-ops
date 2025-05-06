@@ -27,14 +27,4 @@ public class MouseSource extends InputSource implements NativeMouseListener {
             listener.onInputSourceEvent(false);
         }
     }
-
-    @Override
-    public void install() {
-        GlobalScreen.addNativeMouseListener(this);
-    }
-
-    @Override
-    public void uninstall() {
-        GlobalScreen.removeNativeMouseListener(this);
-    }
 }

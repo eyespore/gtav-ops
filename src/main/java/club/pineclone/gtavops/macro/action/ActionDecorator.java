@@ -5,6 +5,7 @@ public class ActionDecorator extends Action {
     protected final Action delegate;
 
     public ActionDecorator(final Action delegate) {
+        super(delegate.actionId);
         this.delegate = delegate;
     }
 

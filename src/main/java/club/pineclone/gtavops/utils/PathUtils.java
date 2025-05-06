@@ -2,6 +2,7 @@ package club.pineclone.gtavops.utils;
 
 import com.github.kwhat.jnativehook.NativeSystem;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -34,15 +35,6 @@ public class PathUtils {
 
     public static Path getFontpacksBaseDirPath() {
         return appHomePath().resolve("fontpacks");
-    }
-
-    /* 本地化文件目录 */
-    public static Path getI18NFilePath(String locale) throws IOException {
-        URL resource = PathUtils.class.getResource("/i18n/" + locale + ".json");
-        if (resource == null) {
-            throw new IOException("i18n file not found");
-        }
-        return Path.of(resource.toExternalForm());
     }
 
     public static void initAppHome() throws IOException {

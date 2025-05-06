@@ -21,14 +21,4 @@ public class ScrollSource extends InputSource implements NativeMouseWheelListene
             listener.onInputSourceEvent(true);
         }
     }
-
-    @Override
-    public void install() {
-        GlobalScreen.addNativeMouseWheelListener(this);
-    }
-
-    @Override
-    public void uninstall() {
-        GlobalScreen.removeNativeMouseWheelListener(this);
-    }
 }

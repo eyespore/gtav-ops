@@ -13,10 +13,11 @@ import club.pineclone.gtavops.macro.SimpleMacro;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.adswing.ADSwingAction;
+import club.pineclone.gtavops.macro.action.impl.ADSwingAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerMode;
 import io.vproxy.vfx.entity.input.Key;
+import io.vproxy.vfx.ui.toggle.ToggleSwitch;
 
 public class _03ADSwingFeatureTogglePane extends FeatureTogglePane {
 
@@ -49,15 +50,24 @@ public class _03ADSwingFeatureTogglePane extends FeatureTogglePane {
     }
 
     private Trigger buildTrigger() {
-        TriggerMode mode = adwConfig.activateMethod == 0 ? TriggerMode.HOLD : TriggerMode.TOGGLE;  /* 激活模式 切换执行 or 按住执行 */
-        Key activatekey = adwConfig.activatekey;  /* 激活热键 */
+        TriggerMode mode = adwConfig.baseSetting.activateMethod == 0 ? TriggerMode.HOLD : TriggerMode.TOGGLE;  /* 激活模式 切换执行 or 按住执行 */
+
+        Key activatekey = adwConfig.baseSetting.activatekey;  /* 激活热键 */
+        if (adwConfig.baseSetting.enableSafetyKey) {
+            Key safetyKey = adwConfig.baseSetting.safetyKey;
+            return TriggerFactory.getTrigger(
+                    new TriggerIdentity(activatekey, mode),
+                    new TriggerIdentity(safetyKey, mode)
+            );
+        }
+
         return TriggerFactory.getTrigger(new TriggerIdentity(activatekey, mode));  /* 触发器 */
     }
 
     private Action buildAction() {
-        long triggerInterval = (long) Math.floor(adwConfig.triggerInterval);
-        Key moveLeftKey = adwConfig.moveLeftKey;
-        Key moveRightKey = adwConfig.moveRightKey;
+        long triggerInterval = (long) Math.floor(adwConfig.baseSetting.triggerInterval);
+        Key moveLeftKey = adwConfig.baseSetting.moveLeftKey;
+        Key moveRightKey = adwConfig.baseSetting.moveRightKey;
         return new ADSwingAction(triggerInterval, moveLeftKey, moveRightKey);
     }
 
@@ -68,12 +78,12 @@ public class _03ADSwingFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     public void init() {
-        selectedProperty().set(adwConfig.enable);
+        selectedProperty().set(adwConfig.baseSetting.enable);
     }
 
     @Override
     public void stop() {
-        adwConfig.enable = selectedProperty().get();
+        adwConfig.baseSetting.enable = selectedProperty().get();
         selectedProperty().set(false);
     }
 
@@ -98,33 +108,45 @@ public class _03ADSwingFeatureTogglePane extends FeatureTogglePane {
             setRange(10, 50);
         }};
 
+        private final ToggleSwitch enableSafetyKeyToggle = new ToggleSwitch();
+        private final VKeyChooseButton safetyKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
+
         public ADWSettingStage() {
             super();
             getContent().getChildren().addAll(contentBuilder()
-                    .button(adwI18n.activateMethod, activateMethodBtn)
-                    .button(adwI18n.activateKey, activateKeyBtn)
-                    .slider(adwI18n.triggerInterval, triggerIntervalSlider)
-                    .button(adwI18n.moveLeftKey, moveLeftKeyBtn)
-                    .button(adwI18n.moveRightKey, moveRightKeyBtn)
+                     .divide(adwI18n.baseSetting.title)
+                    .button(adwI18n.baseSetting.activateMethod, activateMethodBtn)
+                    .button(adwI18n.baseSetting.activateKey, activateKeyBtn)
+                    .slider(adwI18n.baseSetting.triggerInterval, triggerIntervalSlider)
+                    .button(adwI18n.baseSetting.moveLeftKey, moveLeftKeyBtn)
+                    .button(adwI18n.baseSetting.moveRightKey, moveRightKeyBtn)
+                    .toggle(adwI18n.baseSetting.enableSafetyKey, enableSafetyKeyToggle)
+                    .button(adwI18n.baseSetting.safetyKey, safetyKeyBtn)
                     .build());
         }
 
         @Override
         public void init() {
-            activateMethodBtn.indexProperty().set(adwConfig.activateMethod);
-            activateKeyBtn.keyProperty().set(adwConfig.activatekey);
-            moveLeftKeyBtn.keyProperty().set(adwConfig.moveLeftKey);
-            moveRightKeyBtn.keyProperty().set(adwConfig.moveRightKey);
-            triggerIntervalSlider.setValue(adwConfig.triggerInterval);
+            activateMethodBtn.indexProperty().set(adwConfig.baseSetting.activateMethod);
+            activateKeyBtn.keyProperty().set(adwConfig.baseSetting.activatekey);
+            moveLeftKeyBtn.keyProperty().set(adwConfig.baseSetting.moveLeftKey);
+            moveRightKeyBtn.keyProperty().set(adwConfig.baseSetting.moveRightKey);
+            triggerIntervalSlider.setValue(adwConfig.baseSetting.triggerInterval);
+
+            enableSafetyKeyToggle.selectedProperty().set(adwConfig.baseSetting.enableSafetyKey);
+            safetyKeyBtn.keyProperty().set(adwConfig.baseSetting.safetyKey);
         }
 
         @Override
         public void stop() {
-            adwConfig.activateMethod = activateMethodBtn.indexProperty().get();
-            adwConfig.activatekey = activateKeyBtn.keyProperty().get();
-            adwConfig.moveLeftKey = moveLeftKeyBtn.keyProperty().get();
-            adwConfig.moveRightKey = moveRightKeyBtn.keyProperty().get();
-            adwConfig.triggerInterval = triggerIntervalSlider.valueProperty().get();
+            adwConfig.baseSetting.activateMethod = activateMethodBtn.indexProperty().get();
+            adwConfig.baseSetting.activatekey = activateKeyBtn.keyProperty().get();
+            adwConfig.baseSetting.moveLeftKey = moveLeftKeyBtn.keyProperty().get();
+            adwConfig.baseSetting.moveRightKey = moveRightKeyBtn.keyProperty().get();
+            adwConfig.baseSetting.triggerInterval = triggerIntervalSlider.valueProperty().get();
+
+            adwConfig.baseSetting.enableSafetyKey = enableSafetyKeyToggle.selectedProperty().get();
+            adwConfig.baseSetting.safetyKey = safetyKeyBtn.keyProperty().get();
         }
 
         @Override

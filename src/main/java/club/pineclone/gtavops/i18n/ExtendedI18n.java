@@ -122,51 +122,91 @@ public class ExtendedI18n implements InternalI18n {
     @Data
     public static class SwapGlitch {
         public String title = "swap glitch";
-        public String activateKey = "activate key";
-        public String enableSwapMelee = "swap melee on activate";
-        public String postSwapMeleeDelay = "delay after swapping melee";
-        public String enableSwapRanged = "swap ranged weapon on deactivate";
-        public String activateMethod = "activate method";
-        public String triggerInterval = "trigger interval(ms)";
-        public String preferredRangedKey = "preferred ranged weapon key";
+        public BaseSetting baseSetting = new BaseSetting();
+        public SwapMeleeSetting swapMeleeSetting = new SwapMeleeSetting();
+        public SwapRangedSetting swapRangedSetting = new SwapRangedSetting();
 
-        public String meleeKey = "melee weapon key";  /* 近战武器键 */
-        public String targetWeaponWheelKey = "target weapon wheel key";  /* 目标武器轮盘 */
+        /* 基础设置 */
+        @Data
+        public static class BaseSetting {
+            public String title = "base settings";  /* 基础设置 */
+            public String activateMethod = "activate method";
+            public String targetWeaponWheelKey = "target weapon wheel key";  /* 目标武器轮盘 */
+            public String activateKey = "activate key";
+            public String triggerInterval = "trigger interval(ms)";
+        }
 
-        public String enableSafetyWeaponWheel = "enable safety weapon wheel";  /* 启用安全武器轮盘 */
-        public String safetyWeaponWheelKey = "safety weapon wheel key";  /* 安全武器轮盘键 */
-        public String safetyWeaponWheelDuration = "safety weapon wheel duration";  /* 安全轮盘有效期 */
+        /* 切换近战武器设置 */
+        @Data
+        public static class SwapMeleeSetting {
+            public String title = "swap melee settings";
+            public String enable = "swap melee on activate";
+            public String postSwapMeleeDelay = "delay after swapping melee";
+            public String meleeKey = "melee weapon key";  /* 近战武器键 */
+        }
+
+        /* 切换远程武器设置 */
+        @Data
+        public static class SwapRangedSetting {
+            public String title = "swap ranged settings";
+            public String enable = "swap ranged weapon on deactivate";
+            public String preferredRangedWeaponKey = "preferred ranged weapon key";
+            public String enableBlockKey = "enable block key";  /* 启用安全武器轮盘 */
+            public String blockKey = "block key";  /* 安全武器轮盘键 */
+            public String blockDuration = "block duration";  /* 安全轮盘有效期 */
+        }
     }
 
     /* 近战武器偷速 */
     @Data
     public static class MeleeGlitch {
         public String title = "melee glitch";
-        public String activateKey = "activate key";
-        public String activateMethod = "activate method";  /* 激活方式 */
-        public String meleeSnakeScrollKey = "melee snake scroll key";  /* 近战零食滚轮键 */
-        public String triggerInterval = "trigger interval(ms)";
+        public BaseSetting baseSetting = new BaseSetting();
+
+        public static class BaseSetting {
+            public String title = "base settings";
+            public String activateKey = "activate key";
+            public String activateMethod = "activate method";  /* 激活方式 */
+            public String meleeSnakeScrollKey = "melee snake scroll key";  /* 近战零食滚轮键 */
+            public String triggerInterval = "trigger interval(ms)";
+            public String safetyKey = "safety key";
+            public String enableSafetyKey = "enable safety key";
+        }
     }
 
     /* 快速零食 */
     @Data
     public static class QuickSnake {
         public String title = "quick snake";
-        public String activateKey = "activate key";
-        public String triggerInterval = "trigger interval(ms)";
-        public String snakeKey = "snake key";
-        public String weaponWheelKey = "weapon wheel key";
+        public BaseSetting baseSetting = new BaseSetting();
+
+        @Data
+        public static class BaseSetting {
+            public String title = "base settings";
+            public String activateKey = "activate key";
+            public String triggerInterval = "trigger interval(ms)";
+            public String snakeKey = "snake key";
+            public String weaponWheelKey = "weapon wheel key";
+        }
     }
 
     /* AD摇 */
     @Data
     public static class ADSwing {
         public String title = "AD swing";
-        public String activateKey = "activate key";
-        public String activateMethod = "activate method";
-        public String triggerInterval = "trigger interval(ms)";
-        public String moveLeftKey = "move left key";
-        public String moveRightKey = "move right key";
+        public BaseSetting baseSetting = new BaseSetting();
+
+        @Data
+        public static class BaseSetting {
+            public String title = "base settings";
+            public String activateKey = "activate key";
+            public String activateMethod = "activate method";
+            public String triggerInterval = "trigger interval(ms)";
+            public String moveLeftKey = "move left key";
+            public String moveRightKey = "move right key";
+            public String safetyKey = "safety key";
+            public String enableSafetyKey = "enable safety key";
+        }
     }
 
     /* 应用配置 */
@@ -180,12 +220,16 @@ public class ExtendedI18n implements InternalI18n {
     @Data
     public static class BetterMMenu {
         public String title = "better MMenu";
-        public String menuKey = "menu key";  /* 互动菜单键 */
-        public String arrowKeyInterval = "arrow key interval";  /* 方向键之后的等待时间 */
-        public String enterKeyInterval = "enter interval";  /* 回车之后的等待时间 */
-        public String startEngineKey = "start engine key";  /* 快速点火 */
-        public String openVehicleDoor = "open vehicle";  /* 是否打开车门 */
+        public BaseSetting baseSetting = new BaseSetting();
 
+        public static class BaseSetting {
+            public String title = "base settings";
+            public String menuKey = "menu key";  /* 互动菜单键 */
+            public String arrowKeyInterval = "arrow key interval";  /* 方向键之后的等待时间 */
+            public String enterKeyInterval = "enter interval";  /* 回车之后的等待时间 */
+            public String startEngineKey = "start engine key";  /* 快速点火 */
+            public String openVehicleDoor = "open vehicle";  /* 是否打开车门 */
+        }
     }
 
 //    @Data

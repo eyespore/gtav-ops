@@ -1,5 +1,6 @@
 package club.pineclone.gtavops.gui.theme;
 
+import club.pineclone.gtavops.utils.ColorUtils;
 import io.vproxy.vfx.manager.font.FontProvider;
 import io.vproxy.vfx.manager.font.FontSettings;
 import io.vproxy.vfx.manager.font.FontUsage;
@@ -12,14 +13,13 @@ import javafx.scene.text.Font;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class GTAVOpsBaseTheme extends DarkTheme {
+public class BaseTheme extends DarkTheme {
 
     private static final String FONT_NAME_FZMiaoWUS_GB = "FZMiaoWuS-GB";
 
     public Color activeTextColor() {
         return Color.web("lightblue");
     }
-
 
     @Override
     public FontProvider fontProvider() {
@@ -68,19 +68,14 @@ public class GTAVOpsBaseTheme extends DarkTheme {
             settings.setSize(25.0);
         }
 
+        private void dividerText(FontSettings settings) {
+            defaultFont(settings);
+            settings.setSize(27.0);
+        }
+
         @Override
         public void apply(FontUsage usage, FontSettings settings) {
             fontPack.getOrDefault(usage, s -> this._default(usage, s)).accept(settings);
-
-            if (usage == FontUsages.windowTitle) {
-                windowTitle(settings);
-            } else if (usage == FontUsages.tableCellText) {
-                tableCellText(settings);
-            } else if (usage == FontUsages.tableEmptyTableLabel) {
-                tableEmptyTableLabel(settings);
-            } else {
-                _default(usage, settings);
-            }
         }
 
         private final Map<FontUsage, Consumer<FontSettings>> fontPack = Map.of(
@@ -88,7 +83,8 @@ public class GTAVOpsBaseTheme extends DarkTheme {
                 FontUsages.tableCellText, this::tableCellText,
                 FontUsages.tableEmptyTableLabel, this::tableEmptyTableLabel,
                 ExtendedFontUsages.tableHeadText, this::tableHeadText,
-                ExtendedFontUsages.textField, this::textField
+                ExtendedFontUsages.textField, this::textField,
+                ExtendedFontUsages.dividerText, this::dividerText
         );
     }
 }

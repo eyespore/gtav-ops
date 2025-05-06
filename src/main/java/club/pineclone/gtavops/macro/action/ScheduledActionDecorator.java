@@ -5,7 +5,7 @@ public class ScheduledActionDecorator extends ScheduledAction {
     protected final ScheduledAction delegate;
 
     public ScheduledActionDecorator(final ScheduledAction delegate) {
-        super(delegate.getInterval());
+        super(delegate.getActionId(), delegate.getInterval());
         this.delegate = delegate;
     }
 

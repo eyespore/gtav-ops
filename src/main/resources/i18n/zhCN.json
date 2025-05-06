@@ -1,0 +1,142 @@
+{
+  "toggle" : "切换",
+  "hold" : "按住",
+  "unset" : "<未设置>",
+  "confirm" : "确认",
+  "cancel" : "取消",
+  "unknown" : "未知",
+  "enabled" : "启用",
+  "disabled" : "停用",
+  "legacy" : "传承版",
+  "enhanced" : "增强版",
+  "swapGlitch" : {
+    "title" : "普通偷速",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "activateMethod" : "激活方式",
+      "targetWeaponWheelKey" : "武器轮盘键位",
+      "activateKey" : "激活按键",
+      "triggerInterval" : "触发间隔(ms)"
+    },
+    "swapMeleeSetting" : {
+      "title" : "切近战武器设置",
+      "enable" : "激活偷速时切换近战武器",
+      "postSwapMeleeDelay" : "切换近战武器之后的延时",
+      "meleeKey" : "近战武器键"
+    },
+    "swapRangedSetting" : {
+      "title" : "切远程武器设置",
+      "enable" : "撤销偷速时切换远程武器",
+      "preferredRangedWeaponKey" : "偏好远程武器键位",
+      "enableBlockKey" : "启用保险",
+      "blockKey" : "保险键位",
+      "blockDuration" : "保险持续时间"
+    }
+  },
+  "quickSnake" : {
+    "title" : "快速零食",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "activateKey" : "激活按键",
+      "triggerInterval" : "触发间隔(ms)",
+      "snakeKey" : "轮盘零食键",
+      "weaponWheelKey" : "武器轮盘键"
+    }
+  },
+  "adSwing" : {
+    "title" : "AD摇",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "activateKey" : "激活键位",
+      "activateMethod" : "激活方式",
+      "triggerInterval" : "触发间隔(ms)",
+      "moveLeftKey" : "向左移动键位",
+      "moveRightKey" : "向右移动键位",
+      "safetyKey" : "保险键位",
+      "enableSafetyKey" : "启用保险"
+    }
+  },
+  "meleeGlitch" : {
+    "title" : "近战偷速",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "activateKey" : "激活键位",
+      "activateMethod" : "激活方式",
+      "meleeSnakeScrollKey" : "轮盘偷速键位",
+      "triggerInterval" : "触发间隔(ms)",
+      "safetyKey" : "保险键位",
+      "enableSafetyKey" : "启用保险"
+    }
+  },
+  "betterMMenu" : {
+    "title" : "更好M菜单",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "menuKey" : "m菜单键位",
+      "arrowKeyInterval" : "方向键间隔",
+      "enterKeyInterval" : "回车间隔",
+      "startEngineKey" : "点火键位",
+      "openVehicleDoor" : "开车门"
+    }
+  },
+  "fontPack" : {
+    "title" : "字体包管理",
+    "gamePath" : "游戏家目录",
+    "name" : "名称",
+    "desc" : "描述",
+    "type" : "类型",
+    "size" : "大小",
+    "createAt" : "创建时间",
+    "status" : "状态",
+    "importFontpack" : "导入",
+    "removeFontpack" : "移除",
+    "activateFontpack" : "激活",
+    "alreadyActivated" : "撤销",
+    "chooseFontpackFile" : "选择字体包文件",
+    "chooseGameHome" : "选择游戏家目录",
+    "fontpackFileDesc" : "字体包文件",
+    "fontpackName" : "字体包名称",
+    "defaultNaming" : "我的字体包",
+    "importingFontpack" : "正在导入字体包",
+    "importingFontpackDesc" : "我们可以更快，但是那样你就没法阅读这句话了...",
+    "importSuccess" : "导入字体包成功",
+    "importFailure" : "导入字体包失败",
+    "fontpackIsEnabled" : "这个字体包仍处于激活状态，你必须先撤销它!",
+    "illegalGameHome" : "非法的游戏家目录路径! 请确认你选择了正确的游戏路径",
+    "fontpackExisted" : "检测到一个已存在的字体包文件位于 [{0}], 你想将这份字体包资源导入小蓝帽管理吗?",
+    "emptyGameHome" : "/你的/GTAV/游戏/根路径",
+    "confirmActivateFontpack" : "确认要激活字体包 [{0}] 吗?",
+    "confirmRemoveFontpack" : "确认要删除字体包 [{0}] 吗？这会失去很长时间，真的很久",
+    "emptyGameHomeAlert" : "你还没有选择游戏的家目录，请先选择游戏家目录"
+  },
+  "feature" : {
+    "title" : "功能/特性",
+    "header" : "右击某一项功能特性来进行更进一步配置!",
+    "gameVersion" : "游戏版本"
+  },
+  "intro" : {
+    "title" : "介绍",
+    "header" : "由Pineclone开发",
+    "versionLabel" : "当前版本：",
+    "acknowledgement" : "感谢wkgcass的开源UI组件库！",
+    "introNavigate" : "引导页",
+    "featureNavigate" : "特性页",
+    "fontpackNavigate" : "字体包"
+  },
+  "config" : {
+    "title" : "应用配置",
+    "header" : "对GTAV OPS进行配置！"
+  },
+  "keyMouseChooserDesc" : "按下一个按键或是一个鼠标键来确认",
+  "keyChooserForwardMouseButton" : "鼠标前侧键",
+  "keyChooserBackMouseButton" : "鼠标后侧键",
+  "keyChooserLeftMouseButton" : "鼠标左键",
+  "keyChooserMiddleMouseButton" : "鼠标中键",
+  "keyChooserRightMouseButton" : "鼠标右键",
+  "configFileLoadFailed" : "配置文件加载失败，请注意！确认这份弹窗会直接使用默认值覆盖当前的配置文件，从而让程序正常运行",
+  "configStillLoadFailed" : "配置文件还是加载失败了，你可以尝试给Pineclone提供一份issue，他会很乐意帮忙的:3",
+  "duplicatedAppInstanceRunning" : "一个重复的应用程序实例正在运行！此时无法启动一个新的进程",
+  "stacktraceAlertHeaderText" : "看起来我们遇到了一些麻烦 ",
+  "stacktraceAlertLabel" : "如果有必要的话，请不要介意拷贝下面的堆栈信息发送给开发者!",
+  "stacktraceAlertTitle" : "稍等一下!"
+}

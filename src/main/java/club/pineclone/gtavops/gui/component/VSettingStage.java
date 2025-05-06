@@ -1,6 +1,8 @@
 package club.pineclone.gtavops.gui.component;
 
 import club.pineclone.gtavops.gui.forked.ForkedSlider;
+import club.pineclone.gtavops.gui.theme.ExtendedFontUsages;
+import io.vproxy.vfx.manager.font.FontManager;
 import io.vproxy.vfx.ui.button.FusionButton;
 import io.vproxy.vfx.ui.layout.HPadding;
 import io.vproxy.vfx.ui.layout.VPadding;
@@ -10,6 +12,7 @@ import io.vproxy.vfx.ui.toggle.ToggleSwitch;
 import io.vproxy.vfx.ui.wrapper.ThemeLabel;
 import io.vproxy.vfx.util.FXUtils;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -33,7 +36,7 @@ public abstract class VSettingStage {
 
         vStage.getInitialScene().enableAutoContentWidthHeight();
         vStage.getStage().setWidth(800);
-        vStage.getStage().setHeight(400);
+        vStage.getStage().setHeight(500);
         vStage.getStage().initModality(Modality.APPLICATION_MODAL);
         vStage.setTitle(getTitle());
         content = new VBox();
@@ -93,11 +96,21 @@ public abstract class VSettingStage {
     }
 
     protected HBox createDivider(String intro) {
-        HBox hBox = getBaseConfigContent(new Insets(30, 7, 0, 20));
-        hBox.setPrefHeight(70);
+        HBox hBox = getBaseConfigContent(new Insets(0, 0, 0, 0));
+        hBox.setStyle("-fx-border-color: transparent transparent lightblue transparent; " +
+                "-fx-border-width: 0 0 1 0;");
+
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.BOTTOM_LEFT);
+        vBox.setPrefHeight(70);
+
         Region spacer = getSpacer();
         ThemeLabel label = new ThemeLabel(intro);
-        hBox.getChildren().addAll(label, spacer);
+        FontManager.get().setFont(ExtendedFontUsages.dividerText, label);
+        label.setStyle("-fx-text-fill: lightblue");
+        vBox.getChildren().add(label);
+
+        hBox.getChildren().addAll(vBox, spacer);
         return hBox;
     }
 
@@ -147,7 +160,7 @@ public abstract class VSettingStage {
             return this;
         }
 
-        public ContentBuilder divider(String intro) {
+        public ContentBuilder divide(String intro) {
             items.add(createDivider(intro));
             return this;
         }

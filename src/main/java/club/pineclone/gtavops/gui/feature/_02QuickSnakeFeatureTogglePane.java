@@ -12,7 +12,7 @@ import club.pineclone.gtavops.macro.SimpleMacro;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.quickSnake.QuickSnakeAction;
+import club.pineclone.gtavops.macro.action.impl.QuickSnakeAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerMode;
 import io.vproxy.vfx.entity.input.Key;
@@ -40,10 +40,10 @@ public class _02QuickSnakeFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     protected void activate() {
-        Key snakeKey = rsConfig.snakeKey;
-        Key activatekey = rsConfig.activatekey;
-        Key weaponWheelKey = rsConfig.weaponWheel;
-        long triggerInterval = (long) Math.floor(rsConfig.triggerInterval);
+        Key snakeKey = rsConfig.baseSetting.snakeKey;
+        Key activatekey = rsConfig.baseSetting.activatekey;
+        Key weaponWheelKey = rsConfig.baseSetting.weaponWheel;
+        long triggerInterval = (long) Math.floor(rsConfig.baseSetting.triggerInterval);
 
         TriggerIdentity identity1 = new TriggerIdentity(activatekey, TriggerMode.HOLD);
         TriggerIdentity identity2 = new TriggerIdentity(weaponWheelKey, TriggerMode.HOLD);
@@ -61,12 +61,12 @@ public class _02QuickSnakeFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     public void init() {
-        selectedProperty().set(rsConfig.enable);
+        selectedProperty().set(rsConfig.baseSetting.enable);
     }
 
     @Override
     public void stop() {
-        rsConfig.enable = selectedProperty().get();  /* 保存最后状态 */
+        rsConfig.baseSetting.enable = selectedProperty().get();  /* 保存最后状态 */
         selectedProperty().set(false);  /* 关闭功能 */
     }
 
@@ -91,10 +91,11 @@ public class _02QuickSnakeFeatureTogglePane extends FeatureTogglePane {
         public RSSettingStage() {
             super();
             getContent().getChildren().addAll(contentBuilder()
-                            .button(rsI18n.weaponWheelKey, weaponWheelKeyBtn)
-                            .button(rsI18n.activateKey, activateKeyBtn)
-                            .button(rsI18n.snakeKey, snakeKeyBtn)
-                            .slider(rsI18n.triggerInterval, triggerIntervalSlider)
+                            .divide(rsI18n.baseSetting.title)
+                            .button(rsI18n.baseSetting.weaponWheelKey, weaponWheelKeyBtn)
+                            .button(rsI18n.baseSetting.activateKey, activateKeyBtn)
+                            .button(rsI18n.baseSetting.snakeKey, snakeKeyBtn)
+                            .slider(rsI18n.baseSetting.triggerInterval, triggerIntervalSlider)
                             .build()
             );
         }
@@ -107,18 +108,18 @@ public class _02QuickSnakeFeatureTogglePane extends FeatureTogglePane {
         @Override
         public void init() {
             super.init();
-            activateKeyBtn.keyProperty().set(rsConfig.activatekey);
-            snakeKeyBtn.keyProperty().set(rsConfig.snakeKey);
-            weaponWheelKeyBtn.keyProperty().set(rsConfig.weaponWheel);
-            triggerIntervalSlider.setValue(rsConfig.triggerInterval);
+            activateKeyBtn.keyProperty().set(rsConfig.baseSetting.activatekey);
+            snakeKeyBtn.keyProperty().set(rsConfig.baseSetting.snakeKey);
+            weaponWheelKeyBtn.keyProperty().set(rsConfig.baseSetting.weaponWheel);
+            triggerIntervalSlider.setValue(rsConfig.baseSetting.triggerInterval);
         }
 
         @Override
         public void stop() {
-            rsConfig.activatekey = activateKeyBtn.keyProperty().get();
-            rsConfig.snakeKey = snakeKeyBtn.keyProperty().get();
-            rsConfig.weaponWheel = weaponWheelKeyBtn.keyProperty().get();
-            rsConfig.triggerInterval = triggerIntervalSlider.valueProperty().get();
+            rsConfig.baseSetting.activatekey = activateKeyBtn.keyProperty().get();
+            rsConfig.baseSetting.snakeKey = snakeKeyBtn.keyProperty().get();
+            rsConfig.baseSetting.weaponWheel = weaponWheelKeyBtn.keyProperty().get();
+            rsConfig.baseSetting.triggerInterval = triggerIntervalSlider.valueProperty().get();
         }
     }
 }

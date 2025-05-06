@@ -9,4 +9,6 @@ public class ExtendedFontUsages {
 
     public static FontUsage textField = new FontUsage() {};
 
+    public static FontUsage dividerText = new FontUsage() {};
+
 }

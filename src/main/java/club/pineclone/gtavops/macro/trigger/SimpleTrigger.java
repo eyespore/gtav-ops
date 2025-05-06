@@ -32,4 +32,12 @@ public class SimpleTrigger extends Trigger implements InputSourceListener {
         if (flag == 1) activate();
         else if (flag == -1) deactivate();
     }
+
+    @Override
+    public String toString() {
+        return "SimpleTrigger{" +
+                "policy=" + policy +
+                ", source=" + source +
+                '}';
+    }
 }

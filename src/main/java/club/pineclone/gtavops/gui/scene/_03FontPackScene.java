@@ -4,7 +4,7 @@ import club.pineclone.gtavops.config.ConfigHolder;
 import club.pineclone.gtavops.config.Configuration;
 import club.pineclone.gtavops.gui.component.VTextField;
 import club.pineclone.gtavops.gui.forked.*;
-import club.pineclone.gtavops.gui.theme.GTAVOpsBaseTheme;
+import club.pineclone.gtavops.gui.theme.BaseTheme;
 import club.pineclone.gtavops.pojo.FontpackMetadata;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
@@ -112,7 +112,7 @@ public class _03FontPackScene extends SceneTemplate {
             var textField = new VTextField();
             var text = new ForkedFusionW(textField) {{
                 FontManager.get().setFont(FontUsages.tableCellText, getLabel());
-                String colorStr = ColorUtils.formatAsHex(((GTAVOpsBaseTheme)GTAVOpsBaseTheme.current()).activeTextColor());
+                String colorStr = ColorUtils.formatAsHex(((BaseTheme) BaseTheme.current()).activeTextColor());
                 node.setStyle("-fx-background-color: transparent; -fx-text-fill: " + colorStr + "; -fx-padding: 8 0 8 0; -fx-border-color: transparent");
             }};
 
@@ -411,7 +411,12 @@ public class _03FontPackScene extends SceneTemplate {
                 protected void onSucceeded(Void unused) {
                     FXUtils.runDelay(20, () ->
                             ForkedAlert.showAndWait(Alert.AlertType.INFORMATION, fpI18n.importSuccess));
-                    updateAsEnableFontpack(newFontpack);
+
+                    if (enabled) {
+                        updateAsEnableFontpack(newFontpack);  /* 仅enabled为true的字体包设置为激活状态 */
+                    } else {
+                        refreshTable();  /* 其他字体包导入时设置为非激活状态 */
+                    }
                 }
 
                 @Override

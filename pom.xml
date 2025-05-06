@@ -116,6 +116,7 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
+                        <!-- todo: 将构建信息配置到环境 -->
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>

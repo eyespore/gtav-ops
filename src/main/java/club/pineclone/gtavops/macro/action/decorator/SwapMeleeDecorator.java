@@ -1,4 +1,4 @@
-package club.pineclone.gtavops.macro.action.swapglitch;
+package club.pineclone.gtavops.macro.action.decorator;
 
 import club.pineclone.gtavops.macro.action.ActionEvent;
 import club.pineclone.gtavops.macro.action.robot.RobotFactory;
@@ -17,17 +17,20 @@ public class SwapMeleeDecorator extends ScheduledActionDecorator {
         super(delegate);
         this.delay = delay;
         this.hotkey = hotkey;
-        this.robot = RobotFactory.getRobot(hotkey);
+        this.robot = RobotFactory.getRobot(delegate.getActionId());
     }
 
+    /* 在动作(比如切枪偷速)开始之前，切换到近战武器 */
     @Override
-    public boolean beforeSchedule(ActionEvent event) throws Exception {
-        /* 尝试切换到近战 */
-        delegate.beforeSchedule(event);
+    public boolean beforeActivate(ActionEvent event) throws Exception {
+        boolean flag = delegate.beforeActivate(event);
+        if (!flag) return false;
+
         robot.simulate(hotkey);
         Thread.sleep(10);
         robot.simulate(hotkey);
         Thread.sleep(delay);
         return true;
+
     }
 }

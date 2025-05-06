@@ -1,4 +1,4 @@
-package club.pineclone.gtavops.macro.action.bettermmenu;
+package club.pineclone.gtavops.macro.action.impl;
 
 import club.pineclone.gtavops.macro.action.Action;
 import club.pineclone.gtavops.macro.action.ActionEvent;
@@ -16,15 +16,18 @@ public class StartEngineAction extends Action {
 
     private final VCRobotAdapter robot;
 
+    public static final String ACTION_ID = "start-engine";
+
     private final Key downKey = new Key(KeyCode.DOWN);
     private final Key upKey = new Key(KeyCode.UP);
     private final Key enterKey = new Key(KeyCode.ENTER);
     private final Key menuKey;
 
     public StartEngineAction(Key menukey, long arrowKeyInterval, long enterKeyInterval) {
+        super(ACTION_ID);
         this.arrowKeyInterval = arrowKeyInterval;
         this.enterKeyInterval = enterKeyInterval;
-        this.robot = RobotFactory.getRobot(menukey);
+        this.robot = RobotFactory.getRobot();
         this.menuKey = menukey;
     }
 

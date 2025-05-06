@@ -30,4 +30,5 @@ module club.pineclone.gtavops {
     exports club.pineclone.gtavops.macro.trigger.source;
     exports club.pineclone.gtavops.macro.trigger.policy;
     exports club.pineclone.gtavops.context;
+    exports club.pineclone.gtavops.macro.action.impl;
 }

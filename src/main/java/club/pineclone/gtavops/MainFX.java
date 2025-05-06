@@ -19,6 +19,7 @@ import io.vproxy.base.util.LogType;
 import io.vproxy.vfx.control.globalscreen.GlobalScreenUtils;
 import io.vproxy.vfx.manager.task.TaskManager;
 import io.vproxy.vfx.theme.Theme;
+import io.vproxy.vfx.ui.alert.StackTraceAlert;
 import io.vproxy.vfx.ui.button.FusionButton;
 import io.vproxy.vfx.ui.button.FusionImageButton;
 import io.vproxy.vfx.ui.layout.HPadding;
@@ -83,8 +84,7 @@ public class MainFX extends Application {
     private void handleI18nInitException() {
         /* 存在配置文件加载错误 */
         if (i18nInitException != null) {
-            ForkedDialog<Integer> dialog = ForkedDialog.stackTraceDialog(i18nInitException, ForkedDialog.CONFIRM);
-            dialog.showAndWait();
+            StackTraceAlert.showAndWait(i18nInitException);  /* 避免使用i18n */
             System.exit(1);  /* 本地化文件加载错误直接退出 */
         }
     }

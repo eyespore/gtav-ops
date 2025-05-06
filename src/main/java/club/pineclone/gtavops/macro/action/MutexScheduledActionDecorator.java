@@ -8,7 +8,7 @@ public class MutexScheduledActionDecorator extends ScheduledAction  {
     protected final ScheduledAction delegate;
 
     public MutexScheduledActionDecorator(final ScheduledAction delegate) {
-        super(delegate.getInterval());
+        super(delegate.getActionId(), delegate.getInterval());
         this.delegate = delegate;
     }
 

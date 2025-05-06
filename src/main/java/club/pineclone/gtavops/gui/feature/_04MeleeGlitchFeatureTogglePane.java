@@ -11,12 +11,15 @@ import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
 import club.pineclone.gtavops.macro.SimpleMacro;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.meleeGlitch.MeleeGlitchAction;
+import club.pineclone.gtavops.macro.action.ScheduledAction;
+import club.pineclone.gtavops.macro.action.decorator.SwapRangedDecorator;
+import club.pineclone.gtavops.macro.action.impl.MeleeGlitchAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
 import club.pineclone.gtavops.macro.trigger.TriggerMode;
 import io.vproxy.vfx.entity.input.Key;
+import io.vproxy.vfx.ui.toggle.ToggleSwitch;
 
 /* 近战偷速 */
 public class _04MeleeGlitchFeatureTogglePane extends FeatureTogglePane {
@@ -51,14 +54,23 @@ public class _04MeleeGlitchFeatureTogglePane extends FeatureTogglePane {
     }
 
     private Trigger buildTrigger() {
-        TriggerMode mode = mgConfig.activateMethod == 0 ? TriggerMode.HOLD : TriggerMode.TOGGLE;  /* 激活模式 切换执行 or 按住执行 */
-        Key activatekey = mgConfig.activatekey;  /* 激活热键 */
+        TriggerMode mode = mgConfig.baseSetting.activateMethod == 0 ? TriggerMode.HOLD : TriggerMode.TOGGLE;  /* 激活模式 切换执行 or 按住执行 */
+        Key activatekey = mgConfig.baseSetting.activatekey;  /* 激活热键 */
+
+        if (mgConfig.baseSetting.enableSafetyKey) {
+            Key safetyKey = mgConfig.baseSetting.safetyKey;
+            return TriggerFactory.getTrigger(
+                    new TriggerIdentity(activatekey, mode),
+                    new TriggerIdentity(safetyKey, mode)
+            );
+        }
+
         return TriggerFactory.getTrigger(new TriggerIdentity(activatekey, mode));  /* 触发器 */
     }
 
     private Action buildAction() {
-        long triggerInterval = (long) Math.floor(mgConfig.triggerInterval);
-        Key meleeSnakeScrollKey = mgConfig.meleeSnakeScrollKey;
+        long triggerInterval = (long) Math.floor(mgConfig.baseSetting.triggerInterval);
+        Key meleeSnakeScrollKey = mgConfig.baseSetting.meleeSnakeScrollKey;
         return new MeleeGlitchAction(triggerInterval, meleeSnakeScrollKey);
     }
 
@@ -69,12 +81,12 @@ public class _04MeleeGlitchFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     public void init() {
-        selectedProperty().set(mgConfig.enable);
+        selectedProperty().set(mgConfig.baseSetting.enable);
     }
 
     @Override
     public void stop() {
-        mgConfig.enable = selectedProperty().get();
+        mgConfig.baseSetting.enable = selectedProperty().get();
         selectedProperty().set(false);
     }
 
@@ -99,30 +111,42 @@ public class _04MeleeGlitchFeatureTogglePane extends FeatureTogglePane {
             setRange(10, 50);
         }};
 
+        private final ToggleSwitch enableSafetyKeyToggle = new ToggleSwitch();
+        private final VKeyChooseButton safetyKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
+
         public MGSettingStage() {
             getContent().getChildren().addAll(contentBuilder()
-                    .button(mgI18n.activateMethod, activateMethodBtn)
-                    .button(mgI18n.activateKey, activateKeyBtn)
-                    .slider(mgI18n.triggerInterval, triggerIntervalSlider)
-                    .button(mgI18n.meleeSnakeScrollKey, meleeSnakeScrollKeyBtn)
+                    .divide(mgI18n.baseSetting.title)
+                    .button(mgI18n.baseSetting.activateMethod, activateMethodBtn)
+                    .button(mgI18n.baseSetting.activateKey, activateKeyBtn)
+                    .slider(mgI18n.baseSetting.triggerInterval, triggerIntervalSlider)
+                    .button(mgI18n.baseSetting.meleeSnakeScrollKey, meleeSnakeScrollKeyBtn)
+                    .toggle(mgI18n.baseSetting.enableSafetyKey, enableSafetyKeyToggle)
+                    .button(mgI18n.baseSetting.safetyKey, safetyKeyBtn)
                     .build());
         }
 
 
         @Override
         public void init() {
-            activateMethodBtn.indexProperty().set(mgConfig.activateMethod);
-            activateKeyBtn.keyProperty().set(mgConfig.activatekey);
-            meleeSnakeScrollKeyBtn.keyProperty().set(mgConfig.meleeSnakeScrollKey);
-            triggerIntervalSlider.setValue(mgConfig.triggerInterval);
+            activateMethodBtn.indexProperty().set(mgConfig.baseSetting.activateMethod);
+            activateKeyBtn.keyProperty().set(mgConfig.baseSetting.activatekey);
+            meleeSnakeScrollKeyBtn.keyProperty().set(mgConfig.baseSetting.meleeSnakeScrollKey);
+            triggerIntervalSlider.setValue(mgConfig.baseSetting.triggerInterval);
+
+            enableSafetyKeyToggle.selectedProperty().set(mgConfig.baseSetting.enableSafetyKey);
+            safetyKeyBtn.keyProperty().set(mgConfig.baseSetting.safetyKey);
         }
 
         @Override
         public void stop() {
-            mgConfig.activateMethod = activateMethodBtn.indexProperty().get();
-            mgConfig.activatekey = activateKeyBtn.keyProperty().get();
-            mgConfig.triggerInterval = triggerIntervalSlider.valueProperty().get();
-            mgConfig.meleeSnakeScrollKey = meleeSnakeScrollKeyBtn.keyProperty().get();
+            mgConfig.baseSetting.activateMethod = activateMethodBtn.indexProperty().get();
+            mgConfig.baseSetting.activatekey = activateKeyBtn.keyProperty().get();
+            mgConfig.baseSetting.triggerInterval = triggerIntervalSlider.valueProperty().get();
+            mgConfig.baseSetting.meleeSnakeScrollKey = meleeSnakeScrollKeyBtn.keyProperty().get();
+
+            mgConfig.baseSetting.enableSafetyKey = enableSafetyKeyToggle.selectedProperty().get();
+            mgConfig.baseSetting.safetyKey = safetyKeyBtn.keyProperty().get();
         }
 
         @Override

@@ -26,14 +26,4 @@ public class KeySource extends InputSource implements NativeKeyListener {
             listener.onInputSourceEvent(false);
         }
     }
-
-    @Override
-    public void install() {
-        GlobalScreen.addNativeKeyListener(this);
-    }
-
-    @Override
-    public void uninstall() {
-        GlobalScreen.removeNativeKeyListener(this);
-    }
 }

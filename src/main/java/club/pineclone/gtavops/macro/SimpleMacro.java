@@ -14,11 +14,19 @@ public class SimpleMacro extends Macro {
 
     @Override
     public void onTriggerActivate(TriggerEvent event) {
-        action.activate(ActionEvent.of(event));
+        try {
+            action.doActivate(ActionEvent.of(event));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void onTriggerDeactivate(TriggerEvent event) {
-        action.deactivate(ActionEvent.of(event));
+        try {
+            action.doDeactivate(ActionEvent.of(event));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

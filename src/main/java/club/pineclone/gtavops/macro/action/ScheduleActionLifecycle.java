@@ -1,6 +1,6 @@
 package club.pineclone.gtavops.macro.action;
 
-public interface ScheduleLifecycle {
+public interface ScheduleActionLifecycle extends ActionLifecycle {
 
     /**
      * 循环具体逻辑
@@ -8,14 +8,14 @@ public interface ScheduleLifecycle {
     default void schedule(ActionEvent event) throws Exception {}
 
     /**
-     * 循环开始前，可通过返回boolean来决定是否放行执行之后的schedule
+     * 每次循环之前，可通过返回boolean来决定是否放行执行之后的schedule
      */
     default boolean beforeSchedule(ActionEvent event) throws Exception {
         return true;
     }
 
     /**
-     * 循环结束后
+     * 每次循环之后，执行后处理工作
      */
     default void afterSchedule(ActionEvent event) throws Exception {}
 

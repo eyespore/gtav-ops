@@ -1,22 +1,20 @@
-package club.pineclone.gtavops.macro.action.adswing;
+package club.pineclone.gtavops.macro.action.impl;
 
 import club.pineclone.gtavops.macro.action.ActionEvent;
-import club.pineclone.gtavops.macro.action.robot.RobotFactory;
 import club.pineclone.gtavops.macro.action.ScheduledAction;
+import club.pineclone.gtavops.macro.action.robot.RobotFactory;
 import club.pineclone.gtavops.macro.action.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
-import io.vproxy.vfx.entity.input.KeyCode;
 
 
 public class ADSwingAction extends ScheduledAction {
 
-    private final VCRobotAdapter robot1;
-    private final VCRobotAdapter robot2;
-
+    private final VCRobotAdapter robot;
     private final Key moveLeftKey;
     private final Key moveRightKey;
 
     private boolean pressLeft = false;
+    public static final String ACTION_ID = "ad-swing";
 
     /**
      * AD摇宏，执行宏的时候会依据设定的时间interval交替按下AD(可自定义)，从而实现在dc、近战偷速、
@@ -26,23 +24,20 @@ public class ADSwingAction extends ScheduledAction {
      * @param moveRightKey 右移动键
      */
     public ADSwingAction(long interval, Key moveLeftKey, Key moveRightKey) {
-        super(interval);
+        super(ACTION_ID, interval);
         this.moveLeftKey = moveLeftKey;
         this.moveRightKey = moveRightKey;
-
-        this.robot1 = RobotFactory.getRobot(moveLeftKey);
-        this.robot2 = RobotFactory.getRobot(moveRightKey);
+        this.robot = RobotFactory.getRobot("ad-swing");
     }
-
 
     @Override
     public void schedule(ActionEvent event) throws Exception {
-        if (pressLeft) {
+        if (pressLeft) {  /* 按下左 */
             pressLeft = false;
-            robot1.simulate(moveLeftKey);
-        } else {
+            robot.simulate(moveLeftKey);
+        } else {  /* 按下右 */
             pressLeft = true;
-            robot2.simulate(moveRightKey);
+            robot.simulate(moveRightKey);
         }
     }
 }

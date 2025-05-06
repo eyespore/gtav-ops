@@ -10,7 +10,7 @@ import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.i18n.I18nHolder;
 import club.pineclone.gtavops.macro.SimpleMacro;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.bettermmenu.StartEngineAction;
+import club.pineclone.gtavops.macro.action.impl.StartEngineAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
@@ -42,10 +42,10 @@ public class _05BetterMMenuFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     protected void activate() {
-        Key startEngineKey = bmmConfig.startEngineKey;
-        Key menuKey = bmmConfig.menuKey;
-        long arrowKeyInterval = (long) (Math.floor(bmmConfig.arrowKeyInterval));
-        long enterKeyInterval = (long) (Math.floor(bmmConfig.enterKeyInterval));
+        Key startEngineKey = bmmConfig.baseSetting.startEngineKey;
+        Key menuKey = bmmConfig.baseSetting.menuKey;
+        long arrowKeyInterval = (long) (Math.floor(bmmConfig.baseSetting.arrowKeyInterval));
+        long enterKeyInterval = (long) (Math.floor(bmmConfig.baseSetting.enterKeyInterval));
 
         Trigger trigger = TriggerFactory.getTrigger(new TriggerIdentity(startEngineKey, TriggerMode.CLICK));
         Action action = new StartEngineAction(menuKey, arrowKeyInterval, enterKeyInterval);
@@ -61,12 +61,12 @@ public class _05BetterMMenuFeatureTogglePane extends FeatureTogglePane {
 
     @Override
     public void init() {
-        selectedProperty().set(bmmConfig.enable);
+        selectedProperty().set(bmmConfig.baseSetting.enable);
     }
 
     @Override
     public void stop() {
-        bmmConfig.enable = selectedProperty().get();
+        bmmConfig.baseSetting.enable = selectedProperty().get();
         selectedProperty().set(false);
     }
 
@@ -93,10 +93,11 @@ public class _05BetterMMenuFeatureTogglePane extends FeatureTogglePane {
 
         public BMMSettingStage() {
             getContent().getChildren().addAll(contentBuilder()
-                    .button(bmmI18n.menuKey, menuKeyBtn)
-                    .slider(bmmI18n.arrowKeyInterval, arrowKeyIntervalSlider)
-                    .slider(bmmI18n.enterKeyInterval, enterKeyIntervalSlider)
-                    .button(bmmI18n.startEngineKey, startEngineKeyBtn)
+                    .divide(bmmI18n.baseSetting.title)
+                    .button(bmmI18n.baseSetting.menuKey, menuKeyBtn)
+                    .slider(bmmI18n.baseSetting.arrowKeyInterval, arrowKeyIntervalSlider)
+                    .slider(bmmI18n.baseSetting.enterKeyInterval, enterKeyIntervalSlider)
+                    .button(bmmI18n.baseSetting.startEngineKey, startEngineKeyBtn)
                     .build());
         }
 
@@ -107,18 +108,18 @@ public class _05BetterMMenuFeatureTogglePane extends FeatureTogglePane {
 
         @Override
         public void init() {
-            menuKeyBtn.keyProperty().set(bmmConfig.menuKey);
-            arrowKeyIntervalSlider.setValue(bmmConfig.arrowKeyInterval);
-            enterKeyIntervalSlider.setValue(bmmConfig.enterKeyInterval);
-            startEngineKeyBtn.keyProperty().set(bmmConfig.startEngineKey);
+            menuKeyBtn.keyProperty().set(bmmConfig.baseSetting.menuKey);
+            arrowKeyIntervalSlider.setValue(bmmConfig.baseSetting.arrowKeyInterval);
+            enterKeyIntervalSlider.setValue(bmmConfig.baseSetting.enterKeyInterval);
+            startEngineKeyBtn.keyProperty().set(bmmConfig.baseSetting.startEngineKey);
         }
 
         @Override
         public void stop() {
-            bmmConfig.menuKey = menuKeyBtn.keyProperty().get();
-            bmmConfig.arrowKeyInterval = arrowKeyIntervalSlider.valueProperty().get();
-            bmmConfig.enterKeyInterval = enterKeyIntervalSlider.valueProperty().get();
-            bmmConfig.startEngineKey = startEngineKeyBtn.keyProperty().get();
+            bmmConfig.baseSetting.menuKey = menuKeyBtn.keyProperty().get();
+            bmmConfig.baseSetting.arrowKeyInterval = arrowKeyIntervalSlider.valueProperty().get();
+            bmmConfig.baseSetting.enterKeyInterval = enterKeyIntervalSlider.valueProperty().get();
+            bmmConfig.baseSetting.startEngineKey = startEngineKeyBtn.keyProperty().get();
         }
     }
 }

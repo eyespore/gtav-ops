@@ -16,7 +16,7 @@ public class I18nTest extends TestCase {
         ExtendedI18n i18n = new ExtendedI18n();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        Path path = Path.of("enUS.json");
+        Path path = Path.of("zhCN.json");
         mapper.writeValue(path.toFile(), i18n);
     }
 }
