@@ -27,15 +27,15 @@ public class ConditionalTrigger extends Trigger implements TriggerListener {
     }
 
     @Override
-    public void install() {
-        main.install();
-        blocker.install();
+    public void onMarcoInstall() {
+        main.onMarcoInstall();
+        blocker.onMarcoInstall();
     }
 
     @Override
-    public void uninstall() {
-        main.uninstall();
-        blocker.uninstall();
+    public void onMarcoUninstall() {
+        main.onMarcoUninstall();
+        blocker.onMarcoUninstall();
     }
 
     public void setState(ConditionalTriggerPhase phase) {

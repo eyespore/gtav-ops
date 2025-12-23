@@ -1,6 +1,5 @@
 package club.pineclone.gtavops.i18n;
 
-import club.pineclone.gtavops.config.Config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vproxy.vfx.manager.internal_i18n.InternalI18n;
 import lombok.Data;
@@ -44,6 +43,7 @@ public class ExtendedI18n implements InternalI18n {
     public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的M菜单 */
     public BetterLButton betterLButton = new BetterLButton();  /* 更好的鼠标左键 */
     public QuickSwap quickSwap = new QuickSwap();  /* 快速切枪 */
+    public DelayClimb delayClimb = new DelayClimb();  /* 延迟攀 */
 
     public FontPack fontPack = new FontPack();  /* 字体包管理 */
     public Feature feature = new Feature();  /* 功能特性 */
@@ -296,6 +296,21 @@ public class ExtendedI18n implements InternalI18n {
             public String enableBlockKey = "enable block key";
             public String blockKey = "block key";
             public String blockDuration = "block duration(ms)";
+        }
+    }
+
+    /* 延迟攀爬 */
+    @Data
+    public static class DelayClimb {
+        public String title = "Delay Climb";
+        public BaseSetting baseSetting = new BaseSetting();
+
+        public static class BaseSetting {
+            public String title = "base settings";
+            public String toggleDelayClimbKey = "toggle delay climb key";
+            public String usePhoneKey = "use phone key";  /* 使用手机 */
+            public String hideInCoverKey = "hide in cover key";  /* 躲入掩体按键 */
+            public String triggerInterval = "trigger interval(ms)";  /* 启用相机-关闭相机之间的间隔 */
         }
     }
 

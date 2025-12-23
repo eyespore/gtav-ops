@@ -19,23 +19,23 @@ public abstract class Macro implements TriggerListener {
     }
 
     public void install() {  /* 加载宏，例如注册监听器等 */
-        this.trigger.install();
-        this.action.install();  /* 告知生命周期 */
+        this.trigger.onMarcoInstall();
+        this.action.onMarcoInstall();  /* 告知生命周期 */
     }
 
     public void uninstall() {  /* 卸载宏，例如注销监听器等 */
-        this.action.uninstall();
-        this.trigger.uninstall();  /* 注销执行器 */
+        this.action.onMarcoUninstall();
+        this.trigger.onMarcoUninstall();  /* 注销执行器 */
         this.trigger.removeListener(this);  /* 注销自身 */
     }
 
     public void suspend() {
-        this.action.suspend();
-        this.trigger.suspend();
+        this.action.onMarcoSuspend();
+        this.trigger.onMarcoSuspend();
     }
 
     public void resume() {
-        this.action.resume();
-        this.trigger.resume();
+        this.action.onMarcoResume();
+        this.trigger.onMarcoResume();
     }
 }

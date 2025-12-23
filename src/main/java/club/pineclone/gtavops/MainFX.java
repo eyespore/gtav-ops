@@ -109,6 +109,7 @@ public class MainFX extends Application {
         ExtendedI18n.Intro iI18n = i18n.intro;
 
         Class.forName(PlatformFocusMonitor.class.getName());  /* 平台焦点监听 */
+
         PlatformFocusMonitor.addListener(MacroRegistry.getInstance());  /* 添加监听器 */
 
         Class.forName(ActionTaskManager.class.getName());  /* 宏任务调度 */

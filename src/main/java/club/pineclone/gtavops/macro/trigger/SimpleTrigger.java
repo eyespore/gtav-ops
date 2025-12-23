@@ -18,12 +18,12 @@ public class SimpleTrigger extends Trigger implements InputSourceListener {
     }
 
     @Override
-    public void install() {
+    public void onMarcoInstall() {
         source.install();
     }
 
     @Override
-    public void uninstall() {
+    public void onMarcoUninstall() {
         source.uninstall();
     }
 

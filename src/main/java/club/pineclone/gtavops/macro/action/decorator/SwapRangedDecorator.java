@@ -1,9 +1,6 @@
 package club.pineclone.gtavops.macro.action.decorator;
 
-import club.pineclone.gtavops.macro.Macro;
 import club.pineclone.gtavops.macro.MacroContextHolder;
-import club.pineclone.gtavops.macro.MacroRegistry;
-import club.pineclone.gtavops.macro.SimpleMacro;
 import club.pineclone.gtavops.macro.action.Action;
 import club.pineclone.gtavops.macro.action.ActionEvent;
 import club.pineclone.gtavops.macro.action.robot.RobotFactory;
@@ -64,15 +61,15 @@ public class SwapRangedDecorator
     }
 
     @Override
-    public void install() {
-        delegate.install();
+    public void onMarcoInstall() {
+        delegate.onMarcoInstall();
         MACRO_REGISTRY.install(recorderMacroId);
     }
 
     @Override
-    public void uninstall() {
+    public void onMarcoUninstall() {
         MACRO_REGISTRY.uninstall(recorderMacroId);
-        delegate.uninstall();
+        delegate.onMarcoUninstall();
     }
 
     @Override

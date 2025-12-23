@@ -19,6 +19,7 @@ public class Config {
     public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的M菜单 */
     public BetterLButton betterLButton = new BetterLButton();  /* 更好的鼠标左键 */
     public QuickSwap quickSwap = new QuickSwap();  /* 快速切枪 */
+    public DelayClimb delayClimb = new DelayClimb();  /* 延迟攀 */
 
     public String gameHome = "";  /* 游戏路径 */
 
@@ -159,6 +160,7 @@ public class Config {
     }
 
     /* 快速切枪 */
+    @Data
     public static class QuickSwap {
         public String title = "quick swap";
         public BaseSetting baseSetting = new BaseSetting();
@@ -177,5 +179,17 @@ public class Config {
         }
     }
 
+    /* 延迟攀 */
+    @Data
+    public static class DelayClimb {
+        public BaseSetting baseSetting = new BaseSetting();
+        public static class BaseSetting {
+            public boolean enable = false;  /* 是否启用 */
+            public Key toggleDelayClimbKey = new Key(KeyCode.X);  /* 启用/停止延迟攀 */
+            public Key hideInCoverKey = new Key(KeyCode.KEY_5);
+            public Key usePhoneKey = new Key(KeyCode.UP);  /* 使用手机键 */
+            public double triggerInterval = 1500.0;  /* 开启相机-停止相机之间的等待时间 */
+        }
+    }
 }
 

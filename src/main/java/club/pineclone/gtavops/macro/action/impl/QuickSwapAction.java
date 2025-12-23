@@ -39,22 +39,20 @@ public class QuickSwapAction extends Action implements MacroContextHolder {
             /* 启用屏蔽 */
             Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.HOLD, blockKey));
             blockAction = new BlockAction(blockDuration);
-            blockAction.enable();  // 转为激活状态
-
             blockerMacroId = MACRO_FACTORY.createSimpleMacro(trigger, blockAction);
         }
     }
 
     @Override
-    public void install() {
-        super.install();
-        MACRO_REGISTRY.install(blockerMacroId);
+    public void onMarcoInstall() {
+        /* 若用户启用了屏蔽键，那么注册子宏 */
+        if (blockerMacroId != null) MACRO_REGISTRY.install(blockerMacroId);
     }
 
     @Override
-    public void uninstall() {
-        MACRO_REGISTRY.uninstall(blockerMacroId);
-        super.uninstall();
+    public void onMarcoUninstall() {
+        /* 若启用了屏蔽键，那么注销子宏 */
+        if (blockerMacroId != null) MACRO_REGISTRY.uninstall(blockerMacroId);
     }
 
     @Override
@@ -70,10 +68,5 @@ public class QuickSwapAction extends Action implements MacroContextHolder {
         } catch (Exception e) {
             Logger.error(LogType.SYS_ERROR, e.getMessage());
         }
-    }
-
-    @Override
-    public void deactivate(ActionEvent event) {
-
     }
 }

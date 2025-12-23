@@ -9,13 +9,15 @@ public class RobotFactory {
 
     public static final String COMMON_ROBOT = "common-robot";
 
-    /* 推荐使用这个方法获得robot，以提高执行的上线 */
     private static final Map<String, VCRobotAdapter> compositeRobotAdapters = new HashMap<>();
 
     public static VCRobotAdapter getRobot() {
         return getRobot(COMMON_ROBOT);
     }
 
+    // 推荐使用这个方法获得robot，以提高执行的上线
+    // 通过传入的key与robot建立映射关系，如果key已经存在，那么就会返回先前已经创建的robot
+    // 这是为了一些宏当中可能包含“子宏”考虑的
     public static VCRobotAdapter getRobot(String key) {
         return compositeRobotAdapters.computeIfAbsent(key, k -> {
             try {
@@ -28,6 +30,8 @@ public class RobotFactory {
 
 
 
+    /* 基于VCRobotAdapter实现的机器人适配器，主要是提供了simulate的实现 */
+    /* Composite意为“组合”，CompositeRobotAdapter可以直接传入滚轮、键盘按键、鼠标案件，减少编码难度 */
     private static class CompositeRobotAdapter extends VCRobotAdapter {
         public CompositeRobotAdapter(Robot robot) {
             super(robot);

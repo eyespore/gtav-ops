@@ -21,13 +21,13 @@ public class CompositeTrigger extends Trigger implements TriggerListener {
     }
 
     @Override
-    public void install() {
-        triggers.forEach(Trigger::install);
+    public void onMarcoInstall() {
+        triggers.forEach(Trigger::onMarcoInstall);
     }
 
     @Override
-    public void uninstall() {
-        triggers.forEach(Trigger::uninstall);
+    public void onMarcoUninstall() {
+        triggers.forEach(Trigger::onMarcoUninstall);
     }
 
     @Override

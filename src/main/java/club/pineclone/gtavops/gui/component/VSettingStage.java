@@ -85,7 +85,7 @@ public abstract class VSettingStage {
         stop();
     }
 
-    protected HBox creatToggle(String intro, ToggleSwitch toggle) {
+    protected HBox createToggle(String intro, ToggleSwitch toggle) {
         HBox hBox = getBaseConfigContent(new Insets(22, 7, 0, 20));
         hBox.setPrefHeight(60);
         Region spacer = getSpacer();
@@ -192,7 +192,7 @@ public abstract class VSettingStage {
         private final List<Node> items = new ArrayList<>();
 
         public ContentBuilder toggle(String intro, ToggleSwitch toggle) {
-            items.add(creatToggle(intro, toggle));
+            items.add(createToggle(intro, toggle));
             return this;
         }
 
