@@ -55,9 +55,10 @@ public class _05BetterMMenuFeatureTogglePane
             Key menuKey = bmmConfig.baseSetting.menuKey;
             long arrowKeyInterval = (long) (Math.floor(bmmConfig.baseSetting.arrowKeyInterval));
             long enterKeyInterval = (long) (Math.floor(bmmConfig.baseSetting.enterKeyInterval));
+            long timeUtilMMenuLoaded = (long) (Math.floor(bmmConfig.baseSetting.timeUtilMMenuLoaded));
 
             Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, startEngineKey));
-            Action action = new StartEngineAction(menuKey, arrowKeyInterval, enterKeyInterval);
+            Action action = new StartEngineAction(menuKey, arrowKeyInterval, enterKeyInterval, timeUtilMMenuLoaded);
 
             macroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
             MACRO_REGISTRY.install(macroId);
@@ -86,12 +87,18 @@ public class _05BetterMMenuFeatureTogglePane
         private final VKeyChooseButton menuKeyBtn = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
         private final ForkedSlider arrowKeyIntervalSlider = new ForkedSlider() {{
             setLength(200);
-            setRange(1, 50);
+            setRange(10, 100);
         }};
         private final ForkedSlider enterKeyIntervalSlider = new ForkedSlider() {{
             setLength(200);
-            setRange(1, 50);
+            setRange(10, 100);
         }};
+
+        private final ForkedSlider timeUtilMMenuLoadedSlider = new ForkedSlider() {{
+            setLength(400);
+            setRange(10, 2000);
+        }};
+
         private final VKeyChooseButton startEngineKeyBtn = new VKeyChooseButton(FLAG_WITH_ALL);
 
         public BMMSettingStage() {
@@ -100,6 +107,7 @@ public class _05BetterMMenuFeatureTogglePane
                     .button(bmmI18n.baseSetting.menuKey, menuKeyBtn)
                     .slider(bmmI18n.baseSetting.arrowKeyInterval, arrowKeyIntervalSlider)
                     .slider(bmmI18n.baseSetting.enterKeyInterval, enterKeyIntervalSlider)
+                    .slider(bmmI18n.baseSetting.timeUtilMMenuLoaded, timeUtilMMenuLoadedSlider)
                     .button(bmmI18n.baseSetting.startEngineKey, startEngineKeyBtn)
                     .build());
         }
@@ -114,6 +122,7 @@ public class _05BetterMMenuFeatureTogglePane
             menuKeyBtn.keyProperty().set(bmmConfig.baseSetting.menuKey);
             arrowKeyIntervalSlider.setValue(bmmConfig.baseSetting.arrowKeyInterval);
             enterKeyIntervalSlider.setValue(bmmConfig.baseSetting.enterKeyInterval);
+            timeUtilMMenuLoadedSlider.setValue(bmmConfig.baseSetting.timeUtilMMenuLoaded);
             startEngineKeyBtn.keyProperty().set(bmmConfig.baseSetting.startEngineKey);
         }
 
@@ -122,6 +131,7 @@ public class _05BetterMMenuFeatureTogglePane
             bmmConfig.baseSetting.menuKey = menuKeyBtn.keyProperty().get();
             bmmConfig.baseSetting.arrowKeyInterval = arrowKeyIntervalSlider.valueProperty().get();
             bmmConfig.baseSetting.enterKeyInterval = enterKeyIntervalSlider.valueProperty().get();
+            bmmConfig.baseSetting.timeUtilMMenuLoaded = timeUtilMMenuLoadedSlider.valueProperty().get();
             bmmConfig.baseSetting.startEngineKey = startEngineKeyBtn.keyProperty().get();
         }
     }

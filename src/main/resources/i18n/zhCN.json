@@ -77,8 +77,9 @@
     "baseSetting" : {
       "title" : "基础设置",
       "menuKey" : "m菜单键位",
-      "arrowKeyInterval" : "方向键间隔",
-      "enterKeyInterval" : "回车间隔",
+      "arrowKeyInterval" : "方向键间隔(ms)",
+      "enterKeyInterval" : "回车间隔(ms)",
+      "timeUtilMMenuLoaded": "等待M菜单加载时间(ms)",
       "startEngineKey" : "点火键位",
       "openVehicleDoor" : "开车门"
     }

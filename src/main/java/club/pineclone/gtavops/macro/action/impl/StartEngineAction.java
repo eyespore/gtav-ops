@@ -7,11 +7,14 @@ import club.pineclone.gtavops.macro.action.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
 import io.vproxy.vfx.entity.input.KeyCode;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /* 快速点火 */
 public class StartEngineAction extends Action {
 
     private final long arrowKeyInterval;
     private final long enterKeyInterval;
+    private final long timeUtilMMenuLoaded;
 
     private final VCRobotAdapter robot;
 
@@ -22,20 +25,27 @@ public class StartEngineAction extends Action {
     private final Key enterKey = new Key(KeyCode.ENTER);
     private final Key menuKey;
 
-    private final Object lock = new Object();
+    private final ReentrantLock lock = new ReentrantLock();
 
-    public StartEngineAction(Key menukey, long arrowKeyInterval, long enterKeyInterval) {
+    public StartEngineAction(Key menukey, long arrowKeyInterval,
+                             long enterKeyInterval, long timeUtilMMenuLoaded) {
         super(ACTION_ID);
         this.arrowKeyInterval = arrowKeyInterval;
         this.enterKeyInterval = enterKeyInterval;
+        this.timeUtilMMenuLoaded = timeUtilMMenuLoaded;
         this.robot = RobotFactory.getRobot();
         this.menuKey = menukey;
     }
 
     @Override
     public void activate(ActionEvent event) throws Exception {
-        synchronized (lock) {
+        if (!lock.tryLock()) return;
+
+        try {
             pressM();
+
+            Thread.sleep(timeUtilMMenuLoaded);
+
             pressDown();
             pressDown();
             pressEnter();
@@ -47,6 +57,8 @@ public class StartEngineAction extends Action {
             pressEnter();
             pressEnter();
             pressM();
+        } finally {
+            lock.unlock();
         }
     }
 
@@ -78,8 +90,7 @@ public class StartEngineAction extends Action {
         Thread.sleep(enterKeyInterval);
     }
 
-    @Override
-    public void deactivate(ActionEvent event) {
-
+    private void awaitTimeUtilMMenuLoaded() throws InterruptedException {
+        Thread.sleep(timeUtilMMenuLoaded);
     }
 }

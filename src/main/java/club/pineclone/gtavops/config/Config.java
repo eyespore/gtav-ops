@@ -126,6 +126,7 @@ public class Config {
             public double arrowKeyInterval = 20.0;
             public double enterKeyInterval = 20.0;
             public Key startEngineKey = new Key(MouseButton.MIDDLE);
+            public double timeUtilMMenuLoaded = 20.0;
         }
     }
 

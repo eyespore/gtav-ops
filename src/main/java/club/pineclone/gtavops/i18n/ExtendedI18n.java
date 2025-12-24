@@ -249,9 +249,10 @@ public class ExtendedI18n implements InternalI18n {
         public static class BaseSetting {
             public String title = "base settings";
             public String menuKey = "menu key";  /* 互动菜单键 */
-            public String arrowKeyInterval = "arrow key interval";  /* 方向键之后的等待时间 */
-            public String enterKeyInterval = "enter interval";  /* 回车之后的等待时间 */
+            public String arrowKeyInterval = "arrow key interval (ms)";  /* 方向键之后的等待时间 */
+            public String enterKeyInterval = "enter interval (ms)";  /* 回车之后的等待时间 */
             public String startEngineKey = "start engine key";  /* 快速点火 */
+            public String timeUtilMMenuLoaded = "time util menu loaded (ms)";  /* 快速点火 */
             public String openVehicleDoor = "open vehicle";  /* 是否打开车门 */
         }
     }
