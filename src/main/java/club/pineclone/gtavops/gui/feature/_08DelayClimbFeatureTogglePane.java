@@ -91,9 +91,8 @@ public class _08DelayClimbFeatureTogglePane
         private final Config.DelayClimb dcConfig = config.delayClimb;
 
         private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
-        private static final int FLAG_WITH_ALL = FLAG_WITH_KEY_AND_MOUSE | ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL;
 
-        private final VKeyChooseButton toggleDelayClimbKey = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
+        private final VKeyChooseButton toggleDelayClimbKey = new VKeyChooseButton(FLAG_WITH_KEY_AND_MOUSE);
         private final VKeyChooseButton usePhoneKey = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
         private final VKeyChooseButton hideInCoverKey = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
 

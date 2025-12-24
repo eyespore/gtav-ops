@@ -8,6 +8,9 @@ import club.pineclone.gtavops.macro.action.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
 import io.vproxy.vfx.entity.input.KeyCode;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class DelayClimbAction extends Action {
 
     private final VCRobotAdapter robot;
@@ -21,7 +24,8 @@ public class DelayClimbAction extends Action {
     protected static final String ACTION_ID = "delay-climb";
 
     private boolean isLoopRunning = false;  /* 标记当前循环是否正在运行的状态位 */
-    private final Object lock = new Object();
+    private final ReentrantLock lock = new ReentrantLock();
+
     private final Action cameraAction;
 
     /**
@@ -30,16 +34,18 @@ public class DelayClimbAction extends Action {
     private class CameraAction extends ScheduledAction {
 
         public CameraAction(String macroId, long interval) {
-            super(macroId, interval);
+            super(macroId, interval, 200);
         }
 
         @Override
         public void schedule(ActionEvent event) throws Exception {
             /* 进入CameraAction时相机应当处关闭状态，因此首先启用相机 */
+            if (!isLoopRunning) return;
             enterCamera();
             awaitTimeUtilCameraLoaded2();
             /* 等待相机加载完毕后关闭相机 */
 
+            if (!isLoopRunning) return;
             exitCamera();  /* 退出相机 */
             awaitTimeUtilCameraExited();
         }
@@ -83,7 +89,9 @@ public class DelayClimbAction extends Action {
     /* 在进入循环之前的逻辑，该方法被用于执行宏的阶段1 */
     @Override
     public void activate(ActionEvent event) throws Exception {
-        synchronized (lock) {
+        if (!lock.tryLock()) return;
+
+        try {
             if (isLoopRunning) {
                 /* 当前循环正在运行，那么停止循环之后结束动作 */
                 this.cameraAction.deactivate(event);
@@ -108,6 +116,8 @@ public class DelayClimbAction extends Action {
 
             cameraAction.activate(event);
             isLoopRunning = true;
+        } finally {
+            lock.unlock();
         }
     }
 
@@ -115,11 +125,15 @@ public class DelayClimbAction extends Action {
     public void deactivate(ActionEvent event) throws Exception {
         /* 由于延迟攀Action采用子时间，而不是子宏，子时间并不会被纳入MacroRegistry中得到挂起信号，因此
         *  需要由父动作管理，当挂起时deactivate会被调用，此时由父动作停止子动作 */
-        synchronized (lock) {
+        lock.lock();
+
+        try {
             if (isLoopRunning) {
                 this.cameraAction.deactivate(event);
                 isLoopRunning = false;
             }
+        } finally {
+            lock.unlock();
         }
     }
 
