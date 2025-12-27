@@ -35,7 +35,8 @@ public class ExtendedI18n implements InternalI18n {
     public String mouseWheel = "Mouse wheel";
 
 
-    //    public InGame inGame = new InGame();  /* 游戏内名词 */
+    public InGame inGame = new InGame();  /* 游戏内名词 */
+
     public SwapGlitch swapGlitch = new SwapGlitch();  /* 切枪偷速 */
     public QuickSnake quickSnake = new QuickSnake();  /* 回血增强 */
     public ADSwing adSwing = new ADSwing();  /* AD摇 */
@@ -44,6 +45,7 @@ public class ExtendedI18n implements InternalI18n {
     public BetterLButton betterLButton = new BetterLButton();  /* 更好的鼠标左键 */
     public QuickSwap quickSwap = new QuickSwap();  /* 快速切枪 */
     public DelayClimb delayClimb = new DelayClimb();  /* 延迟攀 */
+    public BetterPMenu betterPMenu = new BetterPMenu();  /* 额外功能 */
 
     public FontPack fontPack = new FontPack();  /* 字体包管理 */
     public Feature feature = new Feature();  /* 功能特性 */
@@ -65,6 +67,17 @@ public class ExtendedI18n implements InternalI18n {
     public String stacktraceAlertHeaderText = "Looks like we meet with some problem ";
     public String stacktraceAlertLabel = "If necessary please feel free copy the stack trace blow and send to developers!";
     public String stacktraceAlertTitle = "Hold On!";
+
+
+    /* 游戏内名词 */
+    @Data
+    public static class InGame {
+        public String publicSession = "public session";  /* 公开战局 */
+        public String inviteOnlySession = "invite only session";  /* 邀请战局 */
+        public String crewSession = "crew session";  /* 帮会战局 */
+        public String inviteOnlyCrewSession = "invite only crew session";  /* 非公开帮会战局 */
+        public String inviteOnlyFriendsSession = "invite only friends session";  /* 非公开好友战局 */
+    }
 
     /* 主页 */
     @Data
@@ -243,7 +256,7 @@ public class ExtendedI18n implements InternalI18n {
     /* 更好的M菜单 */
     @Data
     public static class BetterMMenu {
-        public String title = "better MMenu";
+        public String title = "Better MMenu";
         public BaseSetting baseSetting = new BaseSetting();
 
         public static class BaseSetting {
@@ -252,14 +265,14 @@ public class ExtendedI18n implements InternalI18n {
             public String arrowKeyInterval = "arrow key interval (ms)";  /* 方向键之后的等待时间 */
             public String enterKeyInterval = "enter interval (ms)";  /* 回车之后的等待时间 */
             public String startEngineKey = "start engine key";  /* 快速点火 */
-            public String timeUtilMMenuLoaded = "time util menu loaded (ms)";  /* 快速点火 */
+            public String timeUtilMMenuLoaded = "time util menu loaded (ms)";  /* 等待M菜单加载时间 */
             public String openVehicleDoor = "open vehicle";  /* 是否打开车门 */
         }
     }
 
     @Data
     public static class BetterLButton {
-        public String title = "better LButton";
+        public String title = "Better LButton";
         public HoldLButtonSetting holdLButtonSetting = new HoldLButtonSetting();
         public RapidlyClickLButtonSetting rapidlyClickLButtonSetting = new RapidlyClickLButtonSetting();
         public RemapLButtonSetting remapLButtonSetting = new RemapLButtonSetting();
@@ -288,7 +301,7 @@ public class ExtendedI18n implements InternalI18n {
 
     /* 快速切枪 */
     public static class QuickSwap {
-        public String title = "quick swap";
+        public String title = "Quick Swap";
         public BaseSetting baseSetting = new BaseSetting();
 
         public static class BaseSetting {
@@ -318,9 +331,26 @@ public class ExtendedI18n implements InternalI18n {
         }
     }
 
-//    @Data
-//    public static class InGame {
-//    }
+    /* 额外功能 */
+    @Data
+    public static class BetterPMenu {
+        public String title = "Better PMenu";
+        public BaseSetting baseSetting = new BaseSetting();
+        public JoinANewSession joinANewSession = new JoinANewSession();
+
+        public static class BaseSetting {
+            public String mouseScrollInterval = "mouse scroll interval (ms)";  /* 方向键之后的等待时间 */
+            public String enterKeyInterval = "enter interval (ms)";  /* 回车之后的等待时间 */
+            public String timeUtilPMenuLoaded = "time util menu loaded (ms)";  /* 等待P菜单加载时间 */
+        }
+
+        public static class JoinANewSession {
+            public String title = "join a new session";
+            public String enable = "enable join a new session";
+            public String activateKey = "activate key";
+            public String sessionType = "session type";
+        }
+    }
 
     @Override
     public String keyChooserLeftMouseButton() {

@@ -8,6 +8,7 @@ module club.pineclone.test {
     requires static lombok;
     requires io.vproxy.base;
     requires javafx.graphics;
+    requires tess4j;
 
     opens club.pineclone.test.utils;
     opens club.pineclone.test.context;

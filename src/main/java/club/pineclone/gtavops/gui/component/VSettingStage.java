@@ -187,38 +187,50 @@ public abstract class VSettingStage {
     protected class ContentBuilder {
         private final List<Node> items = new ArrayList<>();
 
+        /* 开关按钮 */
         public ContentBuilder toggle(String intro, ToggleSwitch toggle) {
             items.add(createToggle(intro, toggle));
             return this;
         }
 
+        /* 一般按钮 */
         public ContentBuilder button(String intro, FusionButton... buttons) {
             items.add(createButton(intro, buttons));
             return this;
         }
 
+        /* 按钮以及开关 */
         public ContentBuilder buttonToggle(String intro, ToggleSwitch toggle, FusionButton... buttons) {
             items.add(createButtonToggle(intro, toggle, buttons));
             return this;
         }
 
+        /* 拖动条 */
         public ContentBuilder slider(String intro, ForkedSlider slider) {
             items.add(createSlider(intro, slider));
             return this;
         }
 
+        /* 自定义高度间隔 */
         public ContentBuilder gap(double height) {
             items.add(createGap(height));
             return this;
         }
 
+        /* 标准高度间隔 */
         public ContentBuilder gap() {
             items.add(createGap(40));
             return this;
         }
 
+        /* 分割线 */
         public ContentBuilder divide(String intro) {
             items.add(createDivider(intro));
+            return this;
+        }
+
+        /* 多选按钮 */
+        public ContentBuilder option(List<?> options) {
             return this;
         }
 

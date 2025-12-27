@@ -10,9 +10,9 @@ import club.pineclone.gtavops.gui.forked.ForkedSlider;
 import club.pineclone.gtavops.i18n.ExtendedI18n;
 import club.pineclone.gtavops.macro.MacroContextHolder;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.impl.HoldLButtonAction;
-import club.pineclone.gtavops.macro.action.impl.RapidlyClickLButtonAction;
-import club.pineclone.gtavops.macro.action.impl.RemapLButtonAction;
+import club.pineclone.gtavops.macro.action.impl.betterlbutton.HoldLButtonAction;
+import club.pineclone.gtavops.macro.action.impl.betterlbutton.RapidlyClickLButtonAction;
+import club.pineclone.gtavops.macro.action.impl.betterlbutton.RemapLButtonAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
@@ -58,6 +58,7 @@ public class _06BetterLButtonFeatureTogglePane
 
         @Override
         protected void activate() {
+            /* 辅助按住鼠标左键 */
             if (blbConfig.holdLButtonSetting.enable) {
                 TriggerMode mode = blbConfig.holdLButtonSetting.activateMethod;
                 Key activateKey = blbConfig.holdLButtonSetting.activateKey;
@@ -68,6 +69,7 @@ public class _06BetterLButtonFeatureTogglePane
                 MACRO_REGISTRY.install(holdLButtonMacroId);
             }
 
+            /* 辅助点按鼠标左键 */
             if (blbConfig.rapidlyClickLButtonSetting.enable) {
                 TriggerMode mode = blbConfig.rapidlyClickLButtonSetting.activateMethod;
                 Key activateKey = blbConfig.rapidlyClickLButtonSetting.activateKey;
@@ -80,6 +82,7 @@ public class _06BetterLButtonFeatureTogglePane
                 MACRO_REGISTRY.install(rapidlyClickLButtonMacroId);
             }
 
+            /* 鼠标左键重映射 */
             if (blbConfig.remapLButtonSetting.enable) {
                 Key activateKey = blbConfig.remapLButtonSetting.activateKey;
                 Action action = new RemapLButtonAction();

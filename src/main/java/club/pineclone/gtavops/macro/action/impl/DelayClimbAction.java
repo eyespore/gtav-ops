@@ -8,9 +8,6 @@ import club.pineclone.gtavops.macro.action.robot.VCRobotAdapter;
 import io.vproxy.vfx.entity.input.Key;
 import io.vproxy.vfx.entity.input.KeyCode;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class DelayClimbAction extends Action {
 
     private final VCRobotAdapter robot;

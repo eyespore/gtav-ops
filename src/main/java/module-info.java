@@ -32,4 +32,8 @@ module club.pineclone.gtavops {
     exports club.pineclone.gtavops.macro.action.impl;
     exports club.pineclone.gtavops.common;
     opens club.pineclone.gtavops.common;
+    exports club.pineclone.gtavops.macro.action.impl.betterlbutton;
+    exports club.pineclone.gtavops.macro.action.impl.extrafunction;
+    exports club.pineclone.gtavops.macro.action.impl.bettermmenu;
+    exports club.pineclone.gtavops.macro.action.impl.actionext;
 }

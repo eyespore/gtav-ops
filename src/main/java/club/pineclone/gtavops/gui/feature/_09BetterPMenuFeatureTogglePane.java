@@ -1,0 +1,153 @@
+package club.pineclone.gtavops.gui.feature;
+
+import club.pineclone.gtavops.common.ResourceHolder;
+import club.pineclone.gtavops.common.SessionType;
+import club.pineclone.gtavops.config.Config;
+import club.pineclone.gtavops.gui.component.VCycleButton;
+import club.pineclone.gtavops.gui.component.VKeyChooseButton;
+import club.pineclone.gtavops.gui.component.VSettingStage;
+import club.pineclone.gtavops.gui.forked.ForkedKeyChooser;
+import club.pineclone.gtavops.gui.forked.ForkedSlider;
+import club.pineclone.gtavops.i18n.ExtendedI18n;
+import club.pineclone.gtavops.macro.MacroContextHolder;
+import club.pineclone.gtavops.macro.action.Action;
+import club.pineclone.gtavops.macro.action.impl.extrafunction.JoinSessionAction;
+import club.pineclone.gtavops.macro.trigger.Trigger;
+import club.pineclone.gtavops.macro.trigger.TriggerFactory;
+import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
+import club.pineclone.gtavops.macro.trigger.TriggerMode;
+import io.vproxy.vfx.entity.input.Key;
+import io.vproxy.vfx.ui.toggle.ToggleSwitch;
+
+import java.util.List;
+import java.util.UUID;
+
+/* 额外功能，例如快速切换战局，快速进入某个夺取 */
+public class _09BetterPMenuFeatureTogglePane
+        extends FeatureTogglePane
+        implements ResourceHolder {
+
+    public _09BetterPMenuFeatureTogglePane() {
+        super(new ExtraFunctionFeatureContext(), new BPMSettingStage());
+    }
+
+    @Override
+    protected String getTitle() {
+        return getI18n().betterPMenu.title;
+    }
+
+    @Override
+    public boolean init() {
+        return getConfig().betterPMenu.baseSetting.enable;
+    }
+
+    @Override
+    public void stop(boolean enabled) {
+        getConfig().betterPMenu.baseSetting.enable = enabled;
+    }
+
+    private static class ExtraFunctionFeatureContext
+            extends FeatureContext
+            implements ResourceHolder, MacroContextHolder {
+
+        private UUID joinANewSessionMacroId;  /* 快速加入新战局 */
+
+        private final Config config = getConfig();
+        private final Config.BetterPMenu bpmconfig = config.betterPMenu;
+
+        @Override
+        protected void activate() {
+            long arrowKeyInterval = (long) (Math.floor(bpmconfig.baseSetting.mouseScrollInterval));
+            long enterKeyInterval = (long) (Math.floor(bpmconfig.baseSetting.enterKeyInterval));
+            long timeUtilPMenuLoaded = (long) (Math.floor(bpmconfig.baseSetting.timeUtilPMenuLoaded));
+
+            /* 快速加入新战局 */
+            if (bpmconfig.joinANewSession.enable) {
+                Key activateKey = bpmconfig.getJoinANewSession().activateKey;
+                SessionType sessionType = bpmconfig.joinANewSession.sessionType;
+
+                Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, activateKey));
+                Action action = new JoinSessionAction(sessionType, arrowKeyInterval, enterKeyInterval, timeUtilPMenuLoaded);
+
+                joinANewSessionMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
+//                Logger.lowLevelDebug(KeyUtils.toString(activateKey));
+                MACRO_REGISTRY.install(joinANewSessionMacroId);
+            }
+        }
+
+        @Override
+        protected void deactivate() {
+            MACRO_REGISTRY.uninstall(joinANewSessionMacroId);
+        }
+    }
+
+    private static class BPMSettingStage
+            extends VSettingStage
+            implements ResourceHolder {
+
+        private final ExtendedI18n i18n = getI18n();
+        private final ExtendedI18n.BetterPMenu bpmI18n = i18n.betterPMenu;
+
+        private final Config config = getConfig();
+        private final Config.BetterPMenu bpmConfig = config.betterPMenu;
+
+        private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
+
+        private final ForkedSlider mouseScrollIntervalSlider = new ForkedSlider() {{
+            setLength(200);
+            setRange(10, 200);
+        }};
+        private final ForkedSlider enterKeyIntervalSlider = new ForkedSlider() {{
+            setLength(400);
+            setRange(10, 500);
+        }};
+
+        private final ForkedSlider timeUtilPMenuLoadedSlider = new ForkedSlider() {{
+            setLength(400);
+            setRange(10, 1000);
+        }};
+
+        private final ToggleSwitch enableJoinANewSessionToggle = new ToggleSwitch();
+        private final VKeyChooseButton joinANewSessionActivateKey = new VKeyChooseButton(ForkedKeyChooser.FLAG_WITH_KEY);
+        private final VCycleButton<SessionType> joinANewSessionTypeCycle = new VCycleButton<>(List.of(SessionType.values()));
+
+        public BPMSettingStage() {
+            getContent().getChildren().addAll(contentBuilder()
+                    .divide(bpmI18n.joinANewSession.title)
+                    .toggle(bpmI18n.joinANewSession.enable, enableJoinANewSessionToggle)
+                    .button(bpmI18n.joinANewSession.activateKey, joinANewSessionActivateKey)
+                    .button(bpmI18n.joinANewSession.sessionType, joinANewSessionTypeCycle)
+                    .slider(bpmI18n.baseSetting.mouseScrollInterval, mouseScrollIntervalSlider)
+                    .slider(bpmI18n.baseSetting.enterKeyInterval, enterKeyIntervalSlider)
+                    .slider(bpmI18n.baseSetting.timeUtilPMenuLoaded, timeUtilPMenuLoadedSlider)
+                    .build());
+        }
+
+        @Override
+        public String getTitle() {
+            return bpmI18n.title;
+        }
+
+        @Override
+        public void onVSettingStageInit() {
+            mouseScrollIntervalSlider.setValue(bpmConfig.baseSetting.mouseScrollInterval);
+            enterKeyIntervalSlider.setValue(bpmConfig.baseSetting.enterKeyInterval);
+            timeUtilPMenuLoadedSlider.setValue(bpmConfig.baseSetting.timeUtilPMenuLoaded);
+
+            enableJoinANewSessionToggle.selectedProperty().set(bpmConfig.joinANewSession.enable);
+            joinANewSessionActivateKey.keyProperty().set(bpmConfig.joinANewSession.activateKey);
+            joinANewSessionTypeCycle.itemProperty().set(bpmConfig.joinANewSession.sessionType);
+        }
+
+        @Override
+        public void onVSettingStageExit() {
+            bpmConfig.baseSetting.mouseScrollInterval = mouseScrollIntervalSlider.valueProperty().get();
+            bpmConfig.baseSetting.enterKeyInterval = enterKeyIntervalSlider.valueProperty().get();
+            bpmConfig.baseSetting.timeUtilPMenuLoaded = timeUtilPMenuLoadedSlider.valueProperty().get();
+
+            bpmConfig.joinANewSession.enable = enableJoinANewSessionToggle.selectedProperty().get();
+            bpmConfig.joinANewSession.activateKey = joinANewSessionActivateKey.keyProperty().get();
+            bpmConfig.joinANewSession.sessionType = joinANewSessionTypeCycle.itemProperty().get();
+        }
+    }
+}

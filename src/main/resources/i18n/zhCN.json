@@ -13,6 +13,13 @@
   "keyboard" : "键盘",
   "mouseButton" : "鼠标",
   "mouseWheel" : "滚轮",
+  "inGame" : {
+    "publicSession" : "公开战局",
+    "inviteOnlySession" : "邀请战局",
+    "crewSession" : "帮会战局",
+    "inviteOnlyCrewSession" : "非公开帮会战局",
+    "inviteOnlyFriendsSession" : "非公开好友战局"
+  },
   "swapGlitch" : {
     "title" : "普通偷速",
     "baseSetting" : {
@@ -79,8 +86,8 @@
       "menuKey" : "m菜单键位",
       "arrowKeyInterval" : "方向键间隔(ms)",
       "enterKeyInterval" : "回车间隔(ms)",
-      "timeUtilMMenuLoaded": "等待M菜单加载时间(ms)",
       "startEngineKey" : "点火键位",
+      "timeUtilMMenuLoaded" : "等待M菜单加载时间(ms)",
       "openVehicleDoor" : "开车门"
     }
   },
@@ -126,6 +133,20 @@
       "timeUtilCameraExited" : "完全退出相机耗时 (ms)",
       "timeUtilCameraLoaded1" : "第一次启用相机加载耗时 (ms)",
       "timeUtilCameraLoaded2" : "后续启动相机加载耗时 (ms)"
+    }
+  },
+  "betterPMenu" : {
+    "title" : "更好P菜单",
+    "baseSetting" : {
+      "mouseScrollInterval" : "滚轮触发间隔 (ms)",
+      "enterKeyInterval" : "回车间隔 (ms)",
+      "timeUtilPMenuLoaded" : "等待P菜单加载时间 (ms)"
+    },
+    "joinANewSession" : {
+      "title" : "寻找新战局",
+      "enable" : "启用寻找新战局",
+      "activateKey" : "激活键位",
+      "sessionType" : "战局类型"
     }
   },
   "fontPack" : {

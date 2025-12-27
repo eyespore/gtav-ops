@@ -1,10 +1,6 @@
 package club.pineclone.gtavops.config;
 
-import club.pineclone.gtavops.utils.KeyUtils;
 import club.pineclone.gtavops.utils.PathUtils;
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.vproxy.vfx.entity.input.Key;
@@ -36,8 +32,7 @@ public class ConfigHolder {
         }
 
         SimpleModule module = new SimpleModule();
-        module.addSerializer(Key.class, new KeySerializer());  /* 按键序列化 */
-        module.addDeserializer(Key.class, new KeyDeserializer());
+        ConfigCodecs.registerAll(module);
 
         mapper = new ObjectMapper();
         mapper.registerModule(module);  /* 注册模块 */
@@ -67,19 +62,5 @@ public class ConfigHolder {
     public static void save() throws IOException {
         Path configFilePath = PathUtils.getConfigFilePath();
         mapper.writeValue(configFilePath.toFile(), config);  /* 保存配置 */
-    }
-
-    private static class KeySerializer extends JsonSerializer<Key> {
-        @Override
-        public void serialize(Key key, JsonGenerator generator, SerializerProvider provider) throws IOException {
-            generator.writeString(KeyUtils.toString(key));
-        }
-    }
-
-    private static class KeyDeserializer extends JsonDeserializer<Key> {
-        @Override
-        public Key deserialize(JsonParser parser, DeserializationContext context) throws IOException, JacksonException {
-            return KeyUtils.fromString(parser.getText());
-        }
     }
 }

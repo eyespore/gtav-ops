@@ -4,8 +4,6 @@ import club.pineclone.gtavops.common.AbstractRegistry;
 import io.vproxy.vfx.control.globalscreen.GlobalScreenUtils;
 import lombok.Getter;
 
-import java.util.UUID;
-
 public class FeatureTogglePaneRegistry extends AbstractRegistry<FeatureTogglePane> {
 
     @Getter
@@ -20,6 +18,7 @@ public class FeatureTogglePaneRegistry extends AbstractRegistry<FeatureTogglePan
         register(new _06BetterLButtonFeatureTogglePane());
         register(new _07QuickSwapFeatureTogglePane());
         register(new _08DelayClimbFeatureTogglePane());
+        register(new _09BetterPMenuFeatureTogglePane());
     }
 
     public synchronized void initAll() {

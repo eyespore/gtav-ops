@@ -1,5 +1,6 @@
 package club.pineclone.gtavops.config;
 
+import club.pineclone.gtavops.common.SessionType;
 import club.pineclone.gtavops.macro.trigger.TriggerMode;
 import io.vproxy.vfx.entity.input.Key;
 import io.vproxy.vfx.entity.input.KeyCode;
@@ -20,6 +21,7 @@ public class Config {
     public BetterLButton betterLButton = new BetterLButton();  /* 更好的鼠标左键 */
     public QuickSwap quickSwap = new QuickSwap();  /* 快速切枪 */
     public DelayClimb delayClimb = new DelayClimb();  /* 延迟攀 */
+    public BetterPMenu betterPMenu = new BetterPMenu();  /* 额外功能 */
 
     public String gameHome = "";  /* 游戏路径 */
 
@@ -125,7 +127,7 @@ public class Config {
             public Key menuKey = new Key(KeyCode.M);
             public double arrowKeyInterval = 20.0;
             public double enterKeyInterval = 20.0;
-            public Key startEngineKey = new Key(MouseButton.MIDDLE);
+            public Key startEngineKey = new Key(MouseButton.FORWARD);
             public double timeUtilMMenuLoaded = 20.0;
         }
     }
@@ -163,7 +165,6 @@ public class Config {
     /* 快速切枪 */
     @Data
     public static class QuickSwap {
-        public String title = "quick swap";
         public BaseSetting baseSetting = new BaseSetting();
 
         public static class BaseSetting {
@@ -198,6 +199,28 @@ public class Config {
             public double timeUtilCameraLoaded1 = 3000.0;  /* 等待相机加载完成的时间1 */
             public double timeUtilCameraLoaded2 = 1500.0;  /* 等待相机加载完成的时间2 */
 
+        }
+    }
+
+    /* 额外功能 */
+    @Data
+    public static class BetterPMenu {
+
+        public BaseSetting baseSetting = new BaseSetting();
+        public JoinANewSession joinANewSession = new JoinANewSession();
+
+        public static class BaseSetting {
+            public boolean enable = false;
+
+            public double mouseScrollInterval = 50.0;
+            public double enterKeyInterval = 200.0;
+            public double timeUtilPMenuLoaded = 700.0;
+        }
+
+        public static class JoinANewSession {
+            public boolean enable = false;  /* 是否启用 */
+            public Key activateKey = new Key(KeyCode.F6);  /* 寻找新的战局 */
+            public SessionType sessionType = SessionType.INVITE_ONLY_FRIENDS_SESSION;  /* 寻找新战局类型 */
         }
     }
 }
