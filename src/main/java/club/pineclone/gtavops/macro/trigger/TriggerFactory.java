@@ -41,23 +41,6 @@ public class TriggerFactory {
         }
     }
 
-    @Deprecated
-    public static Trigger condition(TriggerIdentity main, TriggerIdentity condition) {
-        Trigger mainTrigger = simple(main);
-        return new ConditionalTrigger(mainTrigger, simple(condition));
-    }
-
-    @Deprecated
-    public static Trigger condition(Trigger main, TriggerIdentity condition) {
-        Trigger conditionTrigger = simple(condition);
-        return new ConditionalTrigger(main, conditionTrigger);
-    }
-
-    @Deprecated
-    public static Trigger condition(Trigger main, Trigger condition) {
-        return new ConditionalTrigger(main, condition);
-    }
-
     /* 构建最小的触发器单位 */
     private static Trigger createSimpleTrigger(TriggerIdentity identity) {
         Set<Key> key = identity.getKeys();

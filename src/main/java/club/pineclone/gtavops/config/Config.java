@@ -217,10 +217,17 @@ public class Config {
             public double timeUtilPMenuLoaded = 700.0;
         }
 
+        /* 加入新战局 */
         public static class JoinANewSession {
             public boolean enable = false;  /* 是否启用 */
             public Key activateKey = new Key(KeyCode.F6);  /* 寻找新的战局 */
             public SessionType sessionType = SessionType.INVITE_ONLY_FRIENDS_SESSION;  /* 寻找新战局类型 */
+        }
+
+        /* 加入已收藏差事 */
+        public static class JoinABookmarkedJob {
+            public boolean enable = false;
+            public Key activateKey = new Key(KeyCode.F7);  /* 加入已收藏差事 */
         }
     }
 }

@@ -25,7 +25,7 @@ public class TriggerEvent {
         return new TriggerEvent(source, TriggerStatus.NORMAL, inputSourceEvent);
     }
 
-    public static TriggerEvent ofBlocked(Trigger source, InputSourceEvent inputSourceEvent) {
-        return new TriggerEvent(source, TriggerStatus.BLOCKED, inputSourceEvent);
+    public enum TriggerStatus {
+        NORMAL,
     }
 }
