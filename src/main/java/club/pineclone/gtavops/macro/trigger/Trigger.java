@@ -22,12 +22,8 @@ public abstract class Trigger implements MacroLifecycleAware {
 
     private final List<TriggerListener> listeners = new ArrayList<>();
 
-    protected void activate(TriggerEvent event) {
-        listeners.forEach(l -> l.onTriggerActivate(event));
-    }
-
-    protected void deactivate(TriggerEvent event) {
-        listeners.forEach(l -> l.onTriggerDeactivate(event));
+    protected void fire(TriggerEvent event) {
+        listeners.forEach(l -> l.onTriggerEvent(event));
     }
 
     /* 添加监听器 */

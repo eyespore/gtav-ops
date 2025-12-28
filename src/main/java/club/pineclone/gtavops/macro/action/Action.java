@@ -46,7 +46,7 @@ public abstract class Action implements ActionLifecycle, MacroLifecycleAware {
     @Override
     public final void onMarcoSuspend() {
         try {
-            this.doDeactivate(new ActionEvent(TriggerEvent.ofNormal(null, null)));
+            this.doDeactivate(null);
             suspended = true;
         } catch (Exception e) {
             Logger.error(LogType.SYS_ERROR, e.getMessage());

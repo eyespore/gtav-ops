@@ -54,7 +54,7 @@ public class SwapRangedDecorator
 
         if (!this.sourceToTargetMap.isEmpty()) {
             /* 映射表不为空，创建子宏 */
-            Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, sourceToTargetMap.keySet()));
+            Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.CLICK, sourceToTargetMap.keySet()));
             Action action = new RecordAction();
             recorderMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
         }

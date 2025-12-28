@@ -62,7 +62,7 @@ public class _06BetterLButtonFeatureTogglePane
             if (blbConfig.holdLButtonSetting.enable) {
                 TriggerMode mode = blbConfig.holdLButtonSetting.activateMethod;
                 Key activateKey = blbConfig.holdLButtonSetting.activateKey;
-                Trigger trigger = TriggerFactory.simple(new TriggerIdentity(mode, activateKey));
+                Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(mode, activateKey));
 
                 Action action = new HoldLButtonAction();
                 holdLButtonMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
@@ -75,7 +75,7 @@ public class _06BetterLButtonFeatureTogglePane
                 Key activateKey = blbConfig.rapidlyClickLButtonSetting.activateKey;
                 long triggerInterval = (long) (Math.floor(blbConfig.rapidlyClickLButtonSetting.triggerInterval));
 
-                Trigger trigger = TriggerFactory.simple(new TriggerIdentity(mode, activateKey));
+                Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(mode, activateKey));
                 Action action = new RapidlyClickLButtonAction(triggerInterval);
 
                 rapidlyClickLButtonMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
@@ -86,7 +86,7 @@ public class _06BetterLButtonFeatureTogglePane
             if (blbConfig.remapLButtonSetting.enable) {
                 Key activateKey = blbConfig.remapLButtonSetting.activateKey;
                 Action action = new RemapLButtonAction();
-                Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.HOLD, activateKey));
+                Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.HOLD, activateKey));
 
                 remapLButtonMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
                 MACRO_REGISTRY.install(remapLButtonMacroId);

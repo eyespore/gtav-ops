@@ -5,6 +5,8 @@ import club.pineclone.gtavops.macro.trigger.source.InputSource;
 import club.pineclone.gtavops.macro.trigger.source.InputSourceEvent;
 import club.pineclone.gtavops.macro.trigger.source.InputSourceListener;
 
+import java.util.Optional;
+
 /* 触发器 */
 public class SimpleTrigger extends Trigger implements InputSourceListener {
 
@@ -29,9 +31,8 @@ public class SimpleTrigger extends Trigger implements InputSourceListener {
 
     @Override
     public void onInputSourceEvent(InputSourceEvent event) {
-        int flag = policy.decide(event);
-        if (flag == 1) activate(TriggerEvent.ofNormal(this, event));  /* 执行 */
-        else if (flag == 0) deactivate(TriggerEvent.ofNormal(this, event));  /* 拒绝 */
+        policy.decide(event).ifPresent(status ->
+                super.fire(TriggerEvent.of(this, status, event)));
     }
 
     @Override

@@ -19,5 +19,4 @@ public class MacroFactory {
         if (MacroRegistry.isGlobalSuspended()) macro.suspend();
         return registry.register(macro);
     }
-
 }

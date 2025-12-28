@@ -2,7 +2,9 @@ package club.pineclone.gtavops.macro;
 
 import club.pineclone.gtavops.macro.action.Action;
 import club.pineclone.gtavops.macro.trigger.Trigger;
+import club.pineclone.gtavops.macro.trigger.TriggerEvent;
 import club.pineclone.gtavops.macro.trigger.TriggerListener;
+import club.pineclone.gtavops.macro.trigger.TriggerStatus;
 import lombok.Getter;
 
 /* 抽象宏 */

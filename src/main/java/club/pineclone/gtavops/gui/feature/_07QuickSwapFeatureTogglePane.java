@@ -81,7 +81,7 @@ public class _07QuickSwapFeatureTogglePane
                     bSetting.blockKey,
                     (long) Math.floor(bSetting.blockDuration));
 
-            Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, sourceToTargetMap.keySet()));
+            Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.CLICK, sourceToTargetMap.keySet()));
             macroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
             MACRO_REGISTRY.install(macroId);
         }

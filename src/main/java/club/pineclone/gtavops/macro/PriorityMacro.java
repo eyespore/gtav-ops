@@ -26,17 +26,11 @@ public class PriorityMacro extends Macro {
         this.state = State.STOPPED;
     }
 
-    /* 仅允许宏处于正常运行状态下执行action的启停 */
+    /* 仅允许宏处于正常运行状态下执行 action 的启停 */
     @Override
-    public void onTriggerActivate(TriggerEvent event) {
+    public void onTriggerEvent(TriggerEvent event) {
         if (state != State.RUNNING) return;
 //        action.activate();
-    }
-
-    @Override
-    public void onTriggerDeactivate(TriggerEvent event) {
-        if (state != State.RUNNING) return;
-//        action.deactivate();
     }
 
     public void setState(State state) {

@@ -57,7 +57,7 @@ public class _05BetterMMenuFeatureTogglePane
             long enterKeyInterval = (long) (Math.floor(bmmConfig.baseSetting.enterKeyInterval));
             long timeUtilMMenuLoaded = (long) (Math.floor(bmmConfig.baseSetting.timeUtilMMenuLoaded));
 
-            Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, startEngineKey));
+            Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.CLICK, startEngineKey));
             Action action = new StartEngineAction(menuKey, arrowKeyInterval, enterKeyInterval, timeUtilMMenuLoaded);
 
             macroId = MACRO_FACTORY.createSimpleMacro(trigger, action);

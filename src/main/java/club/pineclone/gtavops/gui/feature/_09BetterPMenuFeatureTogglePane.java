@@ -66,7 +66,7 @@ public class _09BetterPMenuFeatureTogglePane
                 Key activateKey = bpmconfig.getJoinANewSession().activateKey;
                 SessionType sessionType = bpmconfig.joinANewSession.sessionType;
 
-                Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, activateKey));
+                Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.CLICK, activateKey));
                 Action action = new JoinSessionAction(sessionType, arrowKeyInterval, enterKeyInterval, timeUtilPMenuLoaded);
 
                 joinANewSessionMacroId = MACRO_FACTORY.createSimpleMacro(trigger, action);

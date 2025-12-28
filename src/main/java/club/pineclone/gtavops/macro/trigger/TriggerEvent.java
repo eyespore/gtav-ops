@@ -21,11 +21,7 @@ public class TriggerEvent {
         this.inputSourceEvent = inputSourceEvent;
     }
 
-    public static TriggerEvent ofNormal(Trigger source, InputSourceEvent inputSourceEvent) {
-        return new TriggerEvent(source, TriggerStatus.NORMAL, inputSourceEvent);
-    }
-
-    public enum TriggerStatus {
-        NORMAL,
+    public static TriggerEvent of(Trigger source, TriggerStatus status, InputSourceEvent inputSourceEvent) {
+        return new TriggerEvent(source, status, inputSourceEvent);
     }
 }

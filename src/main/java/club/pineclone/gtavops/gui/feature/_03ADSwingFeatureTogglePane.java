@@ -67,12 +67,12 @@ public class _03ADSwingFeatureTogglePane
             if (adwConfig.baseSetting.enableSafetyKey) {
                 Key safetyKey = adwConfig.baseSetting.safetyKey;
                 return TriggerFactory.composite(
-                        new TriggerIdentity(mode, activatekey),
-                        new TriggerIdentity(mode, safetyKey)
+                        TriggerIdentity.of(mode, activatekey),
+                        TriggerIdentity.of(mode, safetyKey)
                 );
             }
 
-            return TriggerFactory.simple(new TriggerIdentity(mode, activatekey));  /* 触发器 */
+            return TriggerFactory.simple(TriggerIdentity.of(mode, activatekey));  /* 触发器 */
         }
 
         private Action buildAction() {

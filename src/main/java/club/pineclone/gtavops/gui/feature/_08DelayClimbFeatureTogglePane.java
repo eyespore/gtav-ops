@@ -65,7 +65,7 @@ public class _08DelayClimbFeatureTogglePane
             long timeUtilCameraLoaded2 = (long) (Math.floor(dcconfig.baseSetting.timeUtilCameraLoaded2));
 
 
-            Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.CLICK, toggleDelayClimbKey));
+            Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.CLICK, toggleDelayClimbKey));
             Action action = new DelayClimbAction(
                     usePhoneKey, hideInCoverKey, triggerInterval,
                     timeUtilCameraExited, timeUtilCameraLoaded1, timeUtilCameraLoaded2);

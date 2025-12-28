@@ -18,11 +18,7 @@ public class TriggerIdentity {
      * @param mode 触发模式
      * @param keys 触发按键，支持多按键触发
      */
-    public TriggerIdentity(TriggerMode mode, Key... keys) {
-        this(mode, Arrays.stream(keys).collect(Collectors.toSet()));
-    }
-
-    public TriggerIdentity(TriggerMode mode, Set<Key> keys) {
+    private TriggerIdentity(TriggerMode mode, Set<Key> keys) {
         this.type = checkKeyType(keys);  /* 检查类型 */
         keys.forEach(k -> this.checkKeyCompatibility(k, mode));  /* 检查合法性 */
         this.mode = mode;
@@ -65,6 +61,14 @@ public class TriggerIdentity {
     @Override
     public int hashCode() {
         return Objects.hash(type, mode, keys);
+    }
+
+    public static TriggerIdentity of(TriggerMode mode, Key... keys) {
+        return TriggerIdentity.of(mode, Arrays.stream(keys).collect(Collectors.toSet()));
+    }
+
+    public static TriggerIdentity of(TriggerMode mode, Set<Key> keys) {
+        return new TriggerIdentity(mode, keys);
     }
 
 }

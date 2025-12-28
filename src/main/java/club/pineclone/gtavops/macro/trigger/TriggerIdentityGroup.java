@@ -7,12 +7,16 @@ public class TriggerIdentityGroup {
 
     private final Set<TriggerIdentity> identities;
 
-    public TriggerIdentityGroup(TriggerIdentity... identities) {
-        this.identities = Set.of(identities);
+    private TriggerIdentityGroup(Set<TriggerIdentity> identities) {
+        this.identities = identities;
     }
 
-    public TriggerIdentityGroup(Set<TriggerIdentity> identities) {
-        this.identities = identities;
+    public static TriggerIdentityGroup of(TriggerIdentity... identities) {
+        return TriggerIdentityGroup.of(Set.of(identities));
+    }
+
+    public static TriggerIdentityGroup of(Set<TriggerIdentity> identities) {
+        return new TriggerIdentityGroup(identities);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class TriggerFactory {
             return simple(identity);
         } else {
             /* 组合触发器(未来可能更多拓展) */
-            TriggerIdentityGroup identityGroup = new TriggerIdentityGroup(set);
+            TriggerIdentityGroup identityGroup = TriggerIdentityGroup.of(set);
             return multipleTriggerRegistry.computeIfAbsent(identityGroup, group -> {
                 List<Trigger> triggers = set.stream().map(TriggerFactory::simple).toList();
                 return new CompositeTrigger(triggers);

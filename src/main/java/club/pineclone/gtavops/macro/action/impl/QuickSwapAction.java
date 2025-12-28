@@ -38,7 +38,7 @@ public class QuickSwapAction extends Action implements MacroContextHolder {
 
         if (enableBlockKey) {
             /* 启用屏蔽 */
-            Trigger trigger = TriggerFactory.simple(new TriggerIdentity(TriggerMode.HOLD, blockKey));
+            Trigger trigger = TriggerFactory.simple(TriggerIdentity.of(TriggerMode.HOLD, blockKey));
             blockAction = new BlockAction(blockDuration);
             blockerMacroId = MACRO_FACTORY.createSimpleMacro(trigger, blockAction);
         }

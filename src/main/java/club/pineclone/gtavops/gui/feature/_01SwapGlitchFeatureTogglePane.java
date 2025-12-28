@@ -68,7 +68,7 @@ public class _01SwapGlitchFeatureTogglePane
         private Trigger buildTrigger() {
             Key activatekey = baseSetting.activatekey;  /* 激活热键 */
             TriggerMode mode = baseSetting.activateMethod;  /* 激活模式 切换执行 or 按住执行 */
-            return TriggerFactory.simple(new TriggerIdentity(mode, activatekey));  /* 触发器 */
+            return TriggerFactory.simple(TriggerIdentity.of(mode, activatekey));  /* 触发器 */
         }
 
         /* 构建基础动作，并根据配置添加装饰器 */

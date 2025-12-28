@@ -1,7 +1,7 @@
 package club.pineclone.gtavops.macro.trigger;
 
 public enum TriggerMode {
-    TOGGLE,  /* - */
-    HOLD,
+    TOGGLE,  /* 切换触发 */
+    HOLD,  /* 按住触发 */
     CLICK;  /* 单次触发 */
 }

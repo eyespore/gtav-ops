@@ -31,31 +31,30 @@ public class CompositeTrigger extends Trigger implements TriggerListener {
     }
 
     @Override
-    public void onTriggerActivate(TriggerEvent event) {
+    public void onTriggerEvent(TriggerEvent event) {
         Trigger source = event.getSource();
-        synchronized (activeSet) {
-            activeSet.add(source);
+        TriggerStatus status = event.getTriggerStatus();
+        if (status.isAssert()) {
+            /* 触发事件 */
+            synchronized (activeSet) {
+                activeSet.add(source);
 //            lastActiveTime.put(source, System.currentTimeMillis());
-            if (activeSet.size() == triggers.size() && !isActive) {
-                isActive = true;
-                TriggerEvent wrappedEvent = TriggerEvent.ofNormal(this, event.getInputSourceEvent());
-                activate(wrappedEvent);
+                if (activeSet.size() == triggers.size() && !isActive) {
+                    isActive = true;
+                    fire(TriggerEvent.of(this, TriggerStatus.COMPOSITE_ON, event.getInputSourceEvent()));
+                }
             }
-        }
-    }
-
-    @Override
-    public void onTriggerDeactivate(TriggerEvent event) {
-        Trigger source = event.getSource();
-        synchronized (activeSet) {
+        } else if (status.isRevoke()) {
+            /* 撤销事件 */
+            synchronized (activeSet) {
 //            long now = System.currentTimeMillis();
 //            long lastActive = lastActiveTime.getOrDefault(source, 0L);
 //            if (now - lastActive < TOLERANCE_MS) return;
-            activeSet.remove(source);
-            if (isActive && activeSet.size() < triggers.size()) {
-                isActive = false;
-                TriggerEvent wrappedEvent = TriggerEvent.ofNormal(this, event.getInputSourceEvent());
-                deactivate(wrappedEvent);
+                activeSet.remove(source);
+                if (isActive && activeSet.size() < triggers.size()) {
+                    isActive = false;
+                    fire(TriggerEvent.of(this, TriggerStatus.COMPOSITE_OFF, event.getInputSourceEvent()));
+                }
             }
         }
     }

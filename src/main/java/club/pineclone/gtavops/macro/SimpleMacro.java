@@ -4,6 +4,7 @@ import club.pineclone.gtavops.macro.action.Action;
 import club.pineclone.gtavops.macro.action.ActionEvent;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerEvent;
+import club.pineclone.gtavops.macro.trigger.TriggerStatus;
 
 /* 简单宏实现，构建trigger和action的连接并执行 */
 public class SimpleMacro extends Macro {
@@ -13,20 +14,23 @@ public class SimpleMacro extends Macro {
     }
 
     @Override
-    public void onTriggerActivate(TriggerEvent event) {
-        try {
-            action.doActivate(ActionEvent.of(event));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public void onTriggerEvent(TriggerEvent event) {
+        TriggerStatus status = event.getTriggerStatus();
+        if (status.isAssert()) {
+            /* 激活 */
+            try {
+                action.doActivate(ActionEvent.of(event));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
-    @Override
-    public void onTriggerDeactivate(TriggerEvent event) {
-        try {
-            action.doDeactivate(ActionEvent.of(event));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } else if (status.isRevoke()) {
+            /* 撤销 */
+            try {
+                action.doDeactivate(ActionEvent.of(event));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
