@@ -1,5 +1,6 @@
 package club.pineclone.gtavops.macro.trigger.policy;
 
+import club.pineclone.gtavops.macro.action.ActionTaskManager;
 import club.pineclone.gtavops.macro.trigger.TriggerStatus;
 import club.pineclone.gtavops.macro.trigger.source.InputSourceEvent;
 
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
 public class DoubleClickPolicy implements ActivationPolicy {
 
     private final long interval;
-    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+//    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private volatile long lastPressedTime = 0;
     private volatile ScheduledFuture<?> future = null;
@@ -40,7 +41,7 @@ public class DoubleClickPolicy implements ActivationPolicy {
                     } else {
                         // 第一次点击，延迟判定为 CLICK
                         lastPressedTime = now;
-                        future = scheduler.schedule(() -> {
+                        future = ActionTaskManager.getSCHEDULER().schedule(() -> {
                             callback.accept(Optional.of(TriggerStatus.CLICK));
                             synchronized (lock) {
                                 future = null;
@@ -54,13 +55,13 @@ public class DoubleClickPolicy implements ActivationPolicy {
         }
     }
 
-    @Override
-    public void onMarcoUninstall() {
-        synchronized (lock) {
-            if (future != null && !future.isDone()) {
-                future.cancel(false);
-            }
-        }
-        scheduler.shutdownNow();
-    }
+//    @Override
+//    public void onMarcoUninstall() {
+//        synchronized (lock) {
+//            if (future != null && !future.isDone()) {
+//                future.cancel(false);
+//            }
+//        }
+//        scheduler.shutdownNow();
+//    }
 }

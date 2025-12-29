@@ -58,8 +58,11 @@ public class StartEngineAction extends Action {
         pressM();
         Thread.sleep(timeUtilMMenuLoaded);  /* 解决 M 键菜单出现过晚的问题 */
 
-        mouseScrollDown();
-        mouseScrollDown();
+//        mouseScrollDown();
+//        mouseScrollDown();
+
+        for (int i = 0; i < 9; i++) mouseScrollUp();
+
         pressEnter();
         mouseScrollUp();
         pressEnter();

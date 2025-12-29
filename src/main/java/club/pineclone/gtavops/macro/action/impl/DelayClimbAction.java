@@ -99,13 +99,13 @@ public class DelayClimbAction extends Action {
 
         /* 进入掩体并打开相机 */
         pressHideInCoverKey();
-        Thread.sleep(100);
+//        Thread.sleep(100);
         setupCamera();  /* 相机会自动消失 */
         awaitTimeUtilCameraLoaded1();  /* 此处为第一次打开相机，因此等待时间应当较长一些 */
 
         /* 按住 W 键位并点击空格 */
         holdWAndPressSpace();
-        Thread.sleep(100);
+//        Thread.sleep(100);
         setupCamera();  /* 掏出手机并打开相机 */
         awaitTimeUtilCameraLoaded2();  /* 此后打开相机使用延迟2 */
 

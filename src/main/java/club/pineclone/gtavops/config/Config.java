@@ -132,9 +132,9 @@ public class Config {
         public static class BaseSetting {
             public boolean enable = false;  /* 是否启用 */
             public Key menuKey = new Key(KeyCode.M);
-            public double mouseScrollInterval = 10.0;
+            public double mouseScrollInterval = 30.0;
             public double enterKeyInterval = 20.0;
-            public double timeUtilMMenuLoaded = 20.0;
+            public double timeUtilMMenuLoaded = 100.0;
         }
 
         /* 快速点火 */
