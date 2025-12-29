@@ -132,18 +132,18 @@
     "baseSetting" : {
       "title" : "基础设置",
       "toggleDelayClimbKey" : "启动/停止延迟攀",
-      "usePhoneKey" : "使用电话键位",
       "hideInCoverKey" : "找掩护键位",
       "triggerInterval" : "打开相机间隔(ms)",
       "timeUtilCameraExited" : "完全退出相机耗时 (ms)",
       "timeUtilCameraLoaded1" : "第一次启用相机加载耗时 (ms)",
-      "timeUtilCameraLoaded2" : "后续启动相机加载耗时 (ms)"
+      "timeUtilCameraLoaded2" : "后续启动相机加载耗时 (ms)",
+      "usePhoneKey" : "使用电话键位"
     }
   },
   "betterPMenu" : {
     "title" : "更好P菜单",
     "baseSetting" : {
-      "title" : "base settings",
+      "title" : "基础设置",
       "mouseScrollInterval" : "滚轮触发间隔(ms)",
       "enterKeyInterval" : "回车间隔(ms)",
       "timeUtilPMenuLoaded" : "等待P菜单加载时间(ms)"
@@ -159,6 +159,18 @@
       "enable" : "启用加入已收藏差事",
       "activateKey" : "激活键位",
       "timeUtilJobsLoaded" : "差事列表加载时间(ms)"
+    }
+  },
+  "autoRPG" : {
+    "title" : "连发RPG",
+    "baseSetting" : {
+      "title" : "基础设置",
+      "activateMethod" : "激活方式",
+      "activateKey" : "激活键位",
+      "heavyWeaponKey" : "重型武器键位",
+      "specialWeaponKey" : "特殊武器键位",
+      "triggerInterval" : "触发间隔(ms)",
+      "mousePressInterval" : "鼠标按住时长(ms)"
     }
   },
   "fontPack" : {

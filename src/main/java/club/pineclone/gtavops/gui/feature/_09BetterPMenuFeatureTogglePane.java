@@ -106,8 +106,6 @@ public class _09BetterPMenuFeatureTogglePane
         private final Config config = getConfig();
         private final Config.BetterPMenu bpmConfig = config.betterPMenu;
 
-        private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
-
         private final ForkedSlider mouseScrollIntervalSlider = new ForkedSlider() {{
             setLength(200);
             setRange(10, 200);

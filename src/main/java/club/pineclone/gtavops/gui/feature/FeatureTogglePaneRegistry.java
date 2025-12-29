@@ -19,6 +19,7 @@ public class FeatureTogglePaneRegistry extends AbstractRegistry<FeatureTogglePan
         register(new _07QuickSwapFeatureTogglePane());
         register(new _08DelayClimbFeatureTogglePane());
         register(new _09BetterPMenuFeatureTogglePane());
+        register(new _10AutoRPGFeatureTogglePane());
     }
 
     public synchronized void initAll() {

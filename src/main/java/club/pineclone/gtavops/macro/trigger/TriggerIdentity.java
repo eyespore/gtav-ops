@@ -68,12 +68,10 @@ public class TriggerIdentity {
         return Objects.hash(type, mode, keys, doubleClickInterval);
     }
 
-    @Deprecated
     public static TriggerIdentity of(TriggerMode mode, Key... keys) {
         return TriggerIdentity.of(mode, Arrays.stream(keys).collect(Collectors.toSet()));
     }
 
-    @Deprecated
     public static TriggerIdentity of(TriggerMode mode, Set<Key> keys) {
         return new TriggerIdentity(mode, keys);
     }

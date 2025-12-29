@@ -17,13 +17,18 @@ public class Config {
     public QuickSnake quickSnake = new QuickSnake();
     public ADSwing adSwing = new ADSwing();
     public MeleeGlitch meleeGlitch = new MeleeGlitch();  /* 近战偷速 */
-    public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的M菜单 */
+    public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的 M 菜单 */
     public BetterLButton betterLButton = new BetterLButton();  /* 更好的鼠标左键 */
     public QuickSwap quickSwap = new QuickSwap();  /* 快速切枪 */
     public DelayClimb delayClimb = new DelayClimb();  /* 延迟攀 */
-    public BetterPMenu betterPMenu = new BetterPMenu();  /* 额外功能 */
+    public BetterPMenu betterPMenu = new BetterPMenu();  /* 更好的 P 菜单 */
+    public AutoRPG autoRPG = new AutoRPG();  /* 连发 RPG */
 
     public String gameHome = "";  /* 游戏路径 */
+
+    /* 游戏内配置项 */
+//    public static class InGame {
+//    }
 
     /* 切枪偷速 */
     @Data
@@ -207,7 +212,22 @@ public class Config {
             *  这里提供两个配置项以提供更好的灵活度 */
             public double timeUtilCameraLoaded1 = 3000.0;  /* 等待相机加载完成的时间1 */
             public double timeUtilCameraLoaded2 = 1500.0;  /* 等待相机加载完成的时间2 */
+        }
+    }
 
+    /* 连发 RPG */
+    @Data
+    public static class AutoRPG {
+        public BaseSetting baseSetting = new BaseSetting();
+
+        public static class BaseSetting {
+            public boolean enable = false;  /* 是否启用 */
+            public TriggerMode activateMethod = TriggerMode.HOLD;  /* 触发模式 */
+            public Key activateKey = new Key(KeyCode.KEY_4);  /* 触发按键 */
+            public Key heavyWeaponKey = new Key(KeyCode.KEY_2);  /* 重型武器按键 */
+            public Key specialWeaponKey = new Key(KeyCode.KEY_3);  /* 特殊武器按键 */
+            public double triggerInterval = 500.0;  /* 触发间隔 */
+            public double mousePressInterval = 600.0;  /* 鼠标按住间隔 */
         }
     }
 
