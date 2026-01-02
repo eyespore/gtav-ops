@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Config {
 //    public InGame inGame = new InGame();
     public SwapGlitch swapGlitch = new SwapGlitch();
-    public QuickSnake quickSnake = new QuickSnake();
+    public RouletteSnake rouletteSnake = new RouletteSnake();  /* 轮盘零食 */
     public ADSwing adSwing = new ADSwing();
     public MeleeGlitch meleeGlitch = new MeleeGlitch();  /* 近战偷速 */
     public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的 M 菜单 */
@@ -83,7 +83,7 @@ public class Config {
 
     /* 回血增强 */
     @Data
-    public static class QuickSnake {
+    public static class RouletteSnake {
         public BaseSetting baseSetting = new BaseSetting();
         public static class BaseSetting {
             public boolean enable = false;
@@ -128,21 +128,30 @@ public class Config {
     public static class BetterMMenu {
         public BaseSetting baseSetting = new BaseSetting();
         public StartEngine startEngine = new StartEngine();
+        public AutoSnake autoSnake = new AutoSnake();
 
         public static class BaseSetting {
             public boolean enable = false;  /* 是否启用 */
             public Key menuKey = new Key(KeyCode.M);
-            public double mouseScrollInterval = 30.0;
-            public double enterKeyInterval = 20.0;
+            public double mouseScrollInterval = 40.0;
+            public double keyPressInterval = 40.0;
             public double timeUtilMMenuLoaded = 100.0;
         }
 
         /* 快速点火 */
         public static class StartEngine {
             public boolean enable = false;
-            public Key startEngineKey = new Key(MouseButton.FORWARD);
+            public Key activateKey = new Key(MouseButton.FORWARD);
             public boolean enableDoubleClickToOpenDoor = false;  /* 是否启用双击开门 */
             public double doubleClickInterval = 250;  /* 双击时间窗口 */
+        }
+
+        /* 自动零食 */
+        public static class AutoSnake {
+            public boolean enable = false;
+            public Key activateKey = new Key(KeyCode.N);  /* 激活自动零食 */
+            public boolean keepMMenu = false;  /* 是否保留菜单 */
+            public boolean refillVest = false;  /* 是否使用防弹衣 */
         }
     }
 

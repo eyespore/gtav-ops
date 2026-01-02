@@ -73,6 +73,7 @@ public class TriggerIdentity {
     }
 
     public static TriggerIdentity of(TriggerMode mode, Set<Key> keys) {
+        if (keys.isEmpty()) throw new IllegalArgumentException("Keys set to trigger cannot be empty");
         return new TriggerIdentity(mode, keys);
     }
 

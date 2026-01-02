@@ -16,8 +16,8 @@ public abstract class ScheduledAction extends Action implements ScheduleActionLi
 
     private final long initialDelay;
 
-    public ScheduledAction(String macroId, long interval) {
-        this(macroId, interval, 0);
+    public ScheduledAction(String actionId, long interval) {
+        this(actionId, interval, 0);
     }
 
     public ScheduledAction(String actionId, long interval, long initialDelay) {

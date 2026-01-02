@@ -11,7 +11,7 @@ public class FeatureTogglePaneRegistry extends AbstractRegistry<FeatureTogglePan
 
     private FeatureTogglePaneRegistry() {
         register(new _01SwapGlitchFeatureTogglePane());
-        register(new _02QuickSnakeFeatureTogglePane());
+        register(new _02RouletteSnakeFeatureTogglePane());
         register(new _03ADSwingFeatureTogglePane());
         register(new _04MeleeGlitchFeatureTogglePane());
         register(new _05BetterMMenuFeatureTogglePane());

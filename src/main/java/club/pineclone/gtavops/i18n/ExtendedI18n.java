@@ -38,7 +38,7 @@ public class ExtendedI18n implements InternalI18n {
     public InGame inGame = new InGame();  /* 游戏内名词 */
 
     public SwapGlitch swapGlitch = new SwapGlitch();  /* 切枪偷速 */
-    public QuickSnake quickSnake = new QuickSnake();  /* 回血增强 */
+    public RouletteSnake rouletteSnake = new RouletteSnake();  /* 轮盘零食 */
     public ADSwing adSwing = new ADSwing();  /* AD摇 */
     public MeleeGlitch meleeGlitch = new MeleeGlitch();  /* 近战武器偷速 */
     public BetterMMenu betterMMenu = new BetterMMenu();  /* 更好的 M 菜单 */
@@ -214,8 +214,8 @@ public class ExtendedI18n implements InternalI18n {
 
     /* 快速零食 */
     @Data
-    public static class QuickSnake {
-        public String title = "quick snake";
+    public static class RouletteSnake {
+        public String title = "roulette snake";
         public BaseSetting baseSetting = new BaseSetting();
 
         @Data
@@ -254,27 +254,37 @@ public class ExtendedI18n implements InternalI18n {
         public String header = "Configure GTAV OPS!";
     }
 
-    /* 更好的M菜单 */
+    /* 更好的 M 菜单 */
     @Data
     public static class BetterMMenu {
         public String title = "Better MMenu";
         public BaseSetting baseSetting = new BaseSetting();
         public StartEngine startEngine = new StartEngine();
+        public AutoSnake autoSnake = new AutoSnake();
 
         public static class BaseSetting {
             public String title = "base settings";
             public String menuKey = "menu key";  /* 互动菜单键 */
             public String mouseScrollInterval = "mouse scroll interval (ms)";  /* 方向键之后的等待时间 */
-            public String enterKeyInterval = "enter interval (ms)";  /* 回车之后的等待时间 */
+            public String keyPressInterval = "key press interval (ms)";  /* 回车之后的等待时间 */
             public String timeUtilMMenuLoaded = "time util menu loaded (ms)";  /* 等待M菜单加载时间 */
         }
 
         public static class StartEngine {
             public String title = "start engine";
             public String enableStartEngine = "enable start engine";
-            public String startEngineKey = "start engine key";  /* 快速点火 */
+            public String activateKey = "activate key";  /* 快速点火 */
             public String enableDoubleClickToOpenDoor = "enable double click to open door";  /* 是否打开车门 */
             public String doubleClickInterval = "double click interval";  /* 双击间隔 */
+        }
+
+        /* 自动零食 */
+        public static class AutoSnake {
+            public String title = "auto snake";
+            public String enableAutoSnake = "enable auto snake";
+            public String activateKey = "activate key"; /* 激活键位 */
+            public String refillVest = "refill vest";
+            public String keepMMenu = "keep mmenu";  /* 是否保留M菜单 */
         }
     }
 

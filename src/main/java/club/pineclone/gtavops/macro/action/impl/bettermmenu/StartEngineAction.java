@@ -11,34 +11,18 @@ import io.vproxy.vfx.entity.input.KeyCode;
 import io.vproxy.vfx.entity.input.MouseWheelScroll;
 
 /* 快速点火 */
-public class StartEngineAction extends Action {
+public class StartEngineAction extends BetterMMenuAction {
 
-    private final long mouseScrollInterval;
-    private final long enterKeyInterval;
-    private final long timeUtilMMenuLoaded;
     private final boolean enableDoubleClickToOpenDoor;
-
-    private final VCRobotAdapter robot;
-
-    public static final String ACTION_ID = "better-m-menu";
-
-    private final Key mouseScrollDown = new Key(new MouseWheelScroll(MouseWheelScroll.Direction.DOWN, 1));
-    private final Key mouseScrollUp = new Key(new MouseWheelScroll(MouseWheelScroll.Direction.UP, 1));
-    private final Key enterKey = new Key(KeyCode.ENTER);
-    private final Key menuKey;
 
     public StartEngineAction(Key menukey,
                              long mouseScrollInterval,
-                             long enterKeyInterval,
+                             long keyPressInterval,
                              long timeUtilMMenuLoaded,
                              boolean enableDoubleClickToOpenDoor) {
-        super(ACTION_ID);
-        this.mouseScrollInterval = mouseScrollInterval;
-        this.enterKeyInterval = enterKeyInterval;
-        this.timeUtilMMenuLoaded = timeUtilMMenuLoaded;
+
+        super(menukey, mouseScrollInterval, keyPressInterval, timeUtilMMenuLoaded);
         this.enableDoubleClickToOpenDoor = enableDoubleClickToOpenDoor;
-        this.robot = RobotFactory.getRobot();
-        this.menuKey = menukey;
     }
 
     @Override
@@ -56,7 +40,7 @@ public class StartEngineAction extends Action {
             }
 
 //        Logger.lowLevelDebug("should open door: " + shouldOpenVehicleDoor);
-            pressM();
+            pressMenuKey();
             Thread.sleep(timeUtilMMenuLoaded);  /* 解决 M 键菜单出现过晚的问题 */
 
 //        mouseScrollDown();
@@ -73,29 +57,9 @@ public class StartEngineAction extends Action {
             for (int i = 0; i < 4; i++) mouseScrollDown();
             pressEnter();
             pressEnter();
-            pressM();
+            pressMenuKey();
         } catch (InterruptedException ignored) {
 
         }
-    }
-
-    private void pressM() throws InterruptedException {
-        robot.simulate(menuKey);
-        Thread.sleep(enterKeyInterval);
-    }
-
-    private void mouseScrollDown() throws InterruptedException {
-        robot.mouseWheel(mouseScrollDown);
-        Thread.sleep(mouseScrollInterval);
-    }
-
-    private void mouseScrollUp() throws InterruptedException {
-        robot.mouseWheel(mouseScrollUp);
-        Thread.sleep(mouseScrollInterval);
-    }
-
-    private void pressEnter() throws InterruptedException {
-        robot.simulate(enterKey);
-        Thread.sleep(enterKeyInterval);
     }
 }

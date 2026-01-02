@@ -11,43 +11,43 @@ import club.pineclone.gtavops.macro.MacroContextHolder;
 import club.pineclone.gtavops.macro.trigger.TriggerFactory;
 import club.pineclone.gtavops.macro.trigger.TriggerIdentity;
 import club.pineclone.gtavops.macro.action.Action;
-import club.pineclone.gtavops.macro.action.impl.QuickSnakeAction;
+import club.pineclone.gtavops.macro.action.impl.RouletteSnakeAction;
 import club.pineclone.gtavops.macro.trigger.Trigger;
 import club.pineclone.gtavops.macro.trigger.TriggerMode;
 import io.vproxy.vfx.entity.input.Key;
 
 import java.util.UUID;
 
-/* 回血增强 Tab按键 + 滚轮增强 */
-public class _02QuickSnakeFeatureTogglePane
+/* 回血增强 Tab按键 + 滚轮增强 roulette snake */
+public class _02RouletteSnakeFeatureTogglePane
         extends FeatureTogglePane
         implements ResourceHolder {
 
-    public _02QuickSnakeFeatureTogglePane() {
-        super(new QSFeatureContext(), new QSSettingStage());
+    public _02RouletteSnakeFeatureTogglePane() {
+        super(new RSFeatureContext(), new RSSettingStage());
     }
 
     @Override
     protected String getTitle() {
-        return getI18n().quickSnake.title;
+        return getI18n().rouletteSnake.title;
     }
 
     @Override
     public boolean init() {
-        return getConfig().quickSnake.baseSetting.enable;
+        return getConfig().rouletteSnake.baseSetting.enable;
     }
 
     @Override
     public void stop(boolean enabled) {
-        getConfig().quickSnake.baseSetting.enable = enabled;  /* 保存最后状态 */
+        getConfig().rouletteSnake.baseSetting.enable = enabled;  /* 保存最后状态 */
     }
 
-    private static class QSFeatureContext
+    private static class RSFeatureContext
             extends FeatureContext
             implements ResourceHolder, MacroContextHolder {
 
         private UUID macroId;
-        private final Config.QuickSnake rsConfig = getConfig().quickSnake;
+        private final Config.RouletteSnake rsConfig = getConfig().rouletteSnake;
 
         @Override
         protected void activate() {
@@ -60,7 +60,7 @@ public class _02QuickSnakeFeatureTogglePane
             TriggerIdentity identity2 = TriggerIdentity.of(TriggerMode.HOLD, weaponWheelKey);
             Trigger trigger = TriggerFactory.composite(identity1, identity2);
 
-            Action action = new QuickSnakeAction(triggerInterval, snakeKey);
+            Action action = new RouletteSnakeAction(triggerInterval, snakeKey);
             macroId = MACRO_FACTORY.createSimpleMacro(trigger, action);
             MACRO_REGISTRY.install(macroId);
         }
@@ -71,11 +71,11 @@ public class _02QuickSnakeFeatureTogglePane
         }
     }
 
-    private static class QSSettingStage
+    private static class RSSettingStage
             extends VSettingStage
             implements ResourceHolder {
 
-        private final Config.QuickSnake qsConfig = getConfig().quickSnake;
+        private final Config.RouletteSnake qsConfig = getConfig().rouletteSnake;
 
         private static final int FLAG_WITH_KEY_AND_MOUSE = ForkedKeyChooser.FLAG_WITH_KEY  | ForkedKeyChooser.FLAG_WITH_MOUSE;
         private static final int FLAG_WITH_ALL = FLAG_WITH_KEY_AND_MOUSE | ForkedKeyChooser.FLAG_WITH_WHEEL_SCROLL;
@@ -88,9 +88,9 @@ public class _02QuickSnakeFeatureTogglePane
             setRange(1, 100);
         }};
 
-        public QSSettingStage() {
+        public RSSettingStage() {
             super();
-            ExtendedI18n.QuickSnake qsI18n = getI18n().quickSnake;
+            ExtendedI18n.RouletteSnake qsI18n = getI18n().rouletteSnake;
             getContent().getChildren().addAll(contentBuilder()
                             .divide(qsI18n.baseSetting.title)
                             .button(qsI18n.baseSetting.weaponWheelKey, weaponWheelKeyBtn)
@@ -103,7 +103,7 @@ public class _02QuickSnakeFeatureTogglePane
 
         @Override
         public String getTitle() {
-            return getI18n().quickSnake.title;
+            return getI18n().rouletteSnake.title;
         }
 
         @Override
