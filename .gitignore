@@ -5,6 +5,7 @@ target/
 #src/test/
 *.log
 zhCN.json
+result/
 
 ### IntelliJ IDEA ###
 .idea/

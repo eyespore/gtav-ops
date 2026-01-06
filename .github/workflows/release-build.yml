@@ -29,13 +29,13 @@ jobs:
       - name: Build with Maven
         run: mvn clean javafx:jlink -f pom.xml
 
-      # 拷贝native文件
+      # 拷贝 native 文件
       - name: Copy native files
         run: |
           New-Item -ItemType Directory -Force -Path .\target\app\bin\native
           Copy-Item -Recurse .\assets\native\* .\target\app\bin\native\
 
-      # 使用jpackage构建exe文件
+      # 使用 jpackage 构建 exe 文件
       - name: Package with jpackage
         run: |
           jpackage `
